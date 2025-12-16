@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDK Cells Catalog</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #121823;
+    --panel2: #0f1520;
+    --text: #e9eef7;
+    --muted: #9aa7bd;
+    --border: rgba(255,255,255,0.08);
+    --ok: #2bd576;
+    --fail: #ff5c5c;
+    --btn: #1f2a3a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 800px at 20% 0%, #152034 0%, var(--bg) 60%);
+    color: var(--text);
+  }
+  header {
+    padding: 28px 20px 10px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  h1 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    letter-spacing: 0.2px;
+  }
+  .sub {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 20px 40px;
+  }
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: rgba(18,24,35,0.65);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 14px;
+  }
+  .search {
+    width: 380px;
+    max-width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: var(--text);
+    outline: none;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .card {
+    background: rgba(18,24,35,0.75);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .card-top {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  h2 {
+    margin: 0;
+    font-size: 16px;
+  }
+  .meta {
+    margin-top: 6px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+  .pill {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    border: 1px solid var(--border);
+  }
+  .pill.ok { color: var(--ok); border-color: rgba(43,213,118,0.35); }
+  .pill.fail { color: var(--fail); border-color: rgba(255,92,92,0.35); }
+  .actions { display: flex; gap: 8px; }
+  .btn {
+    display: inline-block;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--btn);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn-disabled { opacity: 0.5; }
+  .card-body {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 12px;
+    padding: 12px 14px 14px;
+  }
+  @media (max-width: 900px) {
+    .card-body { grid-template-columns: 1fr; }
+  }
+  .preview {
+    background: rgba(15,21,32,0.7);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .thumb {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+  .thumb-missing {
+    width: 100%;
+    border-radius: 8px;
+    color: var(--muted);
+    text-align: center;
+    padding: 30px 10px;
+  }
+  .info h3 {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.2px;
+  }
+
+  .info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .doc-toggle {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(15,21,32,0.55);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .doc-toggle:hover { filter: brightness(1.08); }
+
+  .doc-caret {
+    color: var(--muted);
+    display: inline-block;
+    transform: rotate(-90deg);
+    transition: transform 120ms ease;
+  }
+  .doc-toggle[aria-expanded="true"] .doc-caret {
+    transform: rotate(0deg);
+  }
+
+  .doc {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(15,21,32,0.45);
+    border: 1px solid var(--border);
+  }
+
+  /* markdown-ish styling */
+  .md-h {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .md-p {
+    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .md-ul {
+    margin: 0 0 8px 18px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .md-code {
+    margin: 0 0 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.25);
+    overflow: auto;
+  }
+  .md-code code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 11px;
+    color: var(--text);
+  }
+  .md-inline {
+    padding: 1px 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.25);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 11px;
+  }
+
+  .kvlist {
+    background: rgba(15,21,32,0.55);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+  }
+  .kv {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+    font-size: 12px;
+  }
+  .kv:last-child { border-bottom: none; }
+  .k { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  .v { color: var(--text); word-break: break-word; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .error {
+    margin: 0;
+    white-space: pre-wrap;
+    color: var(--fail);
+    font-size: 12px;
+  }
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 20px 28px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* section headers (collapsible) */
+  .section {
+    margin-top: 18px;
+    padding: 10px 6px 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    text-align: left;
+  }
+  .section:focus {
+    outline: 2px solid rgba(255,255,255,0.18);
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+  .section-title {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 650;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(15,21,32,0.35);
+    backdrop-filter: blur(6px);
+  }
+  .section-line {
+    height: 1px;
+    flex: 1;
+    background: rgba(255,255,255,0.10);
+  }
+  .section-caret {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 14px;
+    transform: rotate(0deg);
+    transition: transform 120ms ease;
+  }
+  .section[aria-expanded="false"] .section-caret {
+    transform: rotate(-90deg);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>PDK Cells Catalog</h1>
+  <p class="sub">Generated: 2025-12-16 18:32:26 • Build: static HTML (matplotlib renderer)</p>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <input id="q" class="search" placeholder="Filter cells by name (e.g. meander, resonator, cpw)..." />
+    <div class="sub mono">my_pdk</div>
+  </div>
+
+  <div id="grid" class="grid">
+    
+            <button class="section" type="button" data-section="cpw" aria-expanded="true">
+              <div class="section-title">CPW</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="straight_cpw" data-section="cpw">
+                  <div class="card-top">
+                    <div>
+                      <h2>straight_cpw</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/straight_cpw</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/straight_cpw.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/straight_cpw.png' alt='straight_cpw'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-straight_cpw">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-straight_cpw" class="doc md" hidden>
+                        <p class='md-p'>Straight coplanar waveguide (CPW) segment with guaranteed end ports.</p>
+<p class='md-p'>Creates a straight CPW line using the provided cross-section and ensures<br>ports <code class='md-inline'>o1</code> and <code class='md-inline'>o2</code> are always present, even if the underlying gdsfactory<br>primitive does not expose ports.</p>
+<h4 class='md-h'>Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>length</code>: Physical length of the CPW line (µm).</li>
+<li><code class='md-inline'>cross_section</code>: CPW cross-section specification or factory.</li>
+<li><code class='md-inline'>nofill</code>: Whether to include the nofill region defined by the cross-section.</li>
+<li><code class='md-inline'>layer_sig_name</code>: Signal metal layer name (must exist in the active PDK).</li>
+<li><code class='md-inline'>layer_nofill_name</code>: Nofill / keepout layer name (must exist in the active PDK).</li>
+</ul>
+<h4 class='md-h'>Returns</h4>
+A <code class='md-inline'>gdsfactory.Component</code> representing a straight CPW segment.
+<h4 class='md-h'>Notes</h4>
+<ul class='md-ul'>
+<li>Ports are named <code class='md-inline'>o1</code> (left) and <code class='md-inline'>o2</code> (right), aligned along the x-axis.</li>
+<li>If the underlying <code class='md-inline'>straight()</code> component exposes ports, they are reused.</li>
+<li>Otherwise, ports are synthesized using the cross-section width.</li>
+<li>The component stores <code class='md-inline'>length_um</code> in <code class='md-inline'>Component.info</code> for downstream tooling.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>length_um</span><span class='v'>200.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="bend_cpw_circular" data-section="cpw">
+                  <div class="card-top">
+                    <div>
+                      <h2>bend_cpw_circular</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/bend_cpw_circular</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/bend_cpw_circular.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/bend_cpw_circular.png' alt='bend_cpw_circular'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-bend_cpw_circular">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-bend_cpw_circular" class="doc md" hidden>
+                        <p class='md-p'>Circular CPW bend with matched signal and nofill geometry.</p>
+<p class='md-p'>Constructs a circular CPW bend by drawing both the signal conductor and<br>a concentric nofill region, ensuring geometric consistency through bends.<br>Ports are exported from the signal path only.</p>
+<h4 class='md-h'>Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>radius_um</code>: Bend radius measured to the centerline (µm).</li>
+<li><code class='md-inline'>angle_deg</code>: Bend angle in degrees.</li>
+<li><code class='md-inline'>cross_section</code>: CPW cross-section specification (signal path).</li>
+</ul>
+<h4 class='md-h'>Returns</h4>
+A <code class='md-inline'>gdsfactory.Component</code> representing a CPW circular bend.
+<h4 class='md-h'>Notes</h4>
+<ul class='md-ul'>
+<li>The signal bend uses the reference CPW signal width.</li>
+<li>The nofill bend uses <code class='md-inline'>(signal width + 2 × CPW gap)</code>.</li>
+<li>Only signal ports are exposed; the nofill geometry is a passive overlay.</li>
+<li>Raises an error if the underlying bend primitive does not expose ports.</li>
+<li>Key geometric parameters are stored in <code class='md-inline'>Component.info</code>.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>angle_deg</span><span class='v'>90.0</span></div><div class='kv'><span class='k'>nofill_bend_um</span><span class='v'>22.0</span></div><div class='kv'><span class='k'>radius_um</span><span class='v'>80.0</span></div><div class='kv'><span class='k'>width_bend_um</span><span class='v'>10.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="open_stud" data-section="cpw">
+                  <div class="card-top">
+                    <div>
+                      <h2>open_stud</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/open_stud</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/open_stud.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/open_stud.png' alt='open_stud'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-open_stud">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-open_stud" class="doc md" hidden>
+                        <p class='md-p'>Rectangular nofill stud for CPW keepout or density control.</p>
+<p class='md-p'>Generates a simple rectangular block on the nofill layer, typically used<br>to enforce metal density, define keepout regions, or terminate CPW ground<br>structures.</p>
+<h4 class='md-h'>Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>length</code>: Length of the stud along the x-direction (µm).</li>
+<li><code class='md-inline'>width</code>: Width of the stud along the y-direction (µm).</li>
+<li><code class='md-inline'>layer_nofill_name</code>: Nofill / keepout layer name from the active PDK.</li>
+</ul>
+<h4 class='md-h'>Returns</h4>
+A <code class='md-inline'>gdsfactory.Component</code> containing a nofill rectangle with a single port.
+<h4 class='md-h'>Notes</h4>
+<ul class='md-ul'>
+<li>A single port <code class='md-inline'>o1</code> is added at the midpoint of the left edge.</li>
+<li>The port is defined with <code class='md-inline'>port_type=&quot;optical&quot;</code> for gdsfactory compatibility.</li>
+<li>Metadata (<code class='md-inline'>length_um</code>, <code class='md-inline'>width_um</code>, and layer) are stored in <code class='md-inline'>Component.info</code>.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>layer_nofill</span><span class='v'>(9, 1)</span></div><div class='kv'><span class='k'>length_um</span><span class='v'>6.0</span></div><div class='kv'><span class='k'>width_um</span><span class='v'>22.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+            <button class="section" type="button" data-section="josephson_junctions" aria-expanded="true">
+              <div class="section-title">Josephson Junctions</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="jj_cross_manhattan" data-section="josephson_junctions">
+                  <div class="card-top">
+                    <div>
+                      <h2>jj_cross_manhattan</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/jj_cross_manhattan</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/jj_cross_manhattan.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/jj_cross_manhattan.png' alt='jj_cross_manhattan'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-jj_cross_manhattan">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-jj_cross_manhattan" class="doc md" hidden>
+                        <p class='md-p'>Manhattan JJ cross cell (patch + shadow ready).</p>
+<p class='md-p'>Creates a reusable PDK cell for a Manhattan-style Josephson junction cross, including:<br><ul class='md-ul'><br><li>JJ metal cross geometry</li><br><li>patch pads near the cross tips (rectangular in the current implementation)</li><br><li>shadow geometries on separate layers</li><br><li>optional boolean merge of JJ metal + patch pads into one metal layer</li><br></ul></p>
+<h4 class='md-h'>Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>jj_wid</code>: JJ arm width (µm).</li>
+<li><code class='md-inline'>jj_len</code>: JJ arm length (µm).</li>
+<li><code class='md-inline'>jj_arm_ext</code>: geometric extension used when shifting the cross (µm).</li>
+<li><code class='md-inline'>jj_shadow_len</code>: shadow length beyond the arm (µm).</li>
+<li><code class='md-inline'>jj_arm_shadow_overlap</code>: overlap between arm and shadow (µm).</li>
+<li><code class='md-inline'>merge_jj_and_patches</code>: if <code class='md-inline'>True</code>, union JJ cross and patch pads into a single metal layer.</li>
+</ul>
+<h4 class='md-h'>Layer Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>L_JJ</code>: JJ metal layer.</li>
+<li><code class='md-inline'>L_JJ_SHADOW</code>: JJ shadow layer.</li>
+<li><code class='md-inline'>L_PATCH</code>: patch pad layer.</li>
+<li><code class='md-inline'>L_PATCH_SHADOW</code>: patch shadow layer.</li>
+</ul>
+<h4 class='md-h'>Returns</h4>
+A <code class='md-inline'>gf.Component</code> cell suitable for inclusion in higher-level JJ / qubit / resonator assemblies.
+<h4 class='md-h'>Notes</h4>
+<ul class='md-ul'>
+<li>This cell currently delegates geometry to <code class='md-inline'>create_jj_cross_rectangle(...)</code>.</li>
+<li>Keep layer tuples consistent with your PDK mapping (<code class='md-inline'>layers[...]</code>) for correct rendering and export.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="create_jj_cross" data-section="josephson_junctions">
+                  <div class="card-top">
+                    <div>
+                      <h2>create_jj_cross</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/create_jj_cross</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/create_jj_cross.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/create_jj_cross.png' alt='create_jj_cross'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-create_jj_cross">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-create_jj_cross" class="doc md" hidden>
+                        <p class='md-p'>Build a *Manhattan-style JJ cross* with optional rounded patches and shadow layers.</p>
+<p class='md-p'>This is a low-level geometry builder used by higher-level cells. It constructs:<br><ul class='md-ul'><br><li>two orthogonal JJ “arms” (rectangles), merged into a cross</li><br><li>optional *patch* pads (rounded rectangle) near the cross tips</li><br><li>corresponding *shadow* shapes for arms and patches</li><br><li>a final placement/rotation to a conventional 45° Manhattan orientation</li><br></ul></p>
+<h4 class='md-h'>Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>jj_wid</code>: JJ arm width (µm).</li>
+<li><code class='md-inline'>jj_len</code>: JJ arm length (µm).</li>
+<li><code class='md-inline'>jj_arm_ext</code>: geometric extension used when shifting the cross (µm).</li>
+<li><code class='md-inline'>jj_shadow_len</code>: shadow length beyond the arm (µm).</li>
+<li><code class='md-inline'>jj_arm_shadow_overlap</code>: overlap between arm and shadow (µm).</li>
+<li><code class='md-inline'>comp_name</code>: base name for internal components.</li>
+<li><code class='md-inline'>layer_jj_tuple</code>: layer for the JJ metal.</li>
+<li><code class='md-inline'>layer_jj_shadow_tuple</code>: layer for the JJ shadow.</li>
+<li><code class='md-inline'>layer_patches_tuple</code>: layer for the patches (pads).</li>
+<li><code class='md-inline'>layer_patches_shadow_tuple</code>: layer for the patch shadows.</li>
+<li><code class='md-inline'>merge_jj_and_patches</code>: if <code class='md-inline'>True</code>, boolean-union the JJ cross and patch pads into a single layer.</li>
+</ul>
+<h4 class='md-h'>Returns</h4>
+A <code class='md-inline'>gf.Component</code> containing the JJ cross + patches + shadows.
+<h4 class='md-h'>Notes</h4>
+<ul class='md-ul'>
+<li>This function uses boolean unions (<code class='md-inline'>operation=&quot;or&quot;</code>) when <code class='md-inline'>merge_jj_and_patches=True</code>.</li>
+<li>Patches are generated using <code class='md-inline'>round_rectangle_vstack(...)</code>.</li>
+<li>Layer definitions are passed in explicitly to keep the geometry reusable across PDK variants.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="create_jj_cross_bar" data-section="josephson_junctions">
+                  <div class="card-top">
+                    <div>
+                      <h2>create_jj_cross_bar</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/create_jj_cross_bar</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/create_jj_cross_bar.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/create_jj_cross_bar.png' alt='create_jj_cross_bar'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-create_jj_cross_bar">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-create_jj_cross_bar" class="doc md" hidden>
+                        <p class='md-p'>Build a *JJ cross with “bar-style” narrow patch pads* and shadow layers.</p>
+<p class='md-p'>This is a patch-pad variant intended to create thinner “bar” pads compared with the<br>wider patch geometry used in other helpers. It generates:<br><ul class='md-ul'><br><li>JJ cross from two perpendicular rectangles</li><br><li>narrow rectangular patch pads (bar-like)</li><br><li>arm/patch shadows on separate shadow layers</li><br><li>final placement/rotation to a 45° Manhattan orientation</li><br></ul></p>
+<h4 class='md-h'>Parameters</h4>
+<ul class='md-ul'>
+<li><code class='md-inline'>jj_wid</code>: JJ arm width (µm).</li>
+<li><code class='md-inline'>jj_len</code>: JJ arm length (µm).</li>
+<li><code class='md-inline'>jj_arm_ext</code>: geometric extension used when shifting the cross (µm).</li>
+<li><code class='md-inline'>jj_shadow_len</code>: shadow length beyond the arm (µm).</li>
+<li><code class='md-inline'>jj_arm_shadow_overlap</code>: overlap between arm and shadow (µm).</li>
+<li><code class='md-inline'>comp_name</code>: base name for internal components.</li>
+<li><code class='md-inline'>layer_jj_tuple</code>: layer for the JJ metal.</li>
+<li><code class='md-inline'>layer_jj_shadow_tuple</code>: layer for the JJ shadow.</li>
+<li><code class='md-inline'>layer_patches_tuple</code>: layer for the patch pads.</li>
+<li><code class='md-inline'>layer_patches_shadow_tuple</code>: layer for the patch shadow.</li>
+<li><code class='md-inline'>merge_jj_and_patches</code>: if <code class='md-inline'>True</code>, boolean-union the JJ cross and patch pads into a single layer.</li>
+</ul>
+<h4 class='md-h'>Returns</h4>
+A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patches + shadows.
+<h4 class='md-h'>Notes</h4>
+<ul class='md-ul'>
+<li>Patch pad dimensions here are intentionally small (e.g., <code class='md-inline'>patch_wid=0.4</code> in the current implementation).</li>
+<li>This is a geometry helper; add ports or alignment markers in a higher-level cell if needed.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+            <button class="section" type="button" data-section="resonators___assemblies" aria-expanded="true">
+              <div class="section-title">Resonators / assemblies</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="quarter_wave_resonator" data-section="resonators___assemblies">
+                  <div class="card-top">
+                    <div>
+                      <h2>quarter_wave_resonator</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/quarter_wave_resonator</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/quarter_wave_resonator.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/quarter_wave_resonator.png' alt='quarter_wave_resonator'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-quarter_wave_resonator">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-quarter_wave_resonator" class="doc md" hidden>
+                        <p class='md-p'>Minimal λ/4 resonator: a single straight of length ~ λ/4.</p>
+<ul class='md-ul'>
+<li>Uses measured n_eff from tech.py.</li>
+<li>Exposes &#x27;input&#x27; and &#x27;open_end&#x27; ports.</li>
+</ul>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>eps_eff_ref</span><span class='v'>6.64376472</span></div><div class='kv'><span class='k'>f_target_GHz</span><span class='v'>6.0</span></div><div class='kv'><span class='k'>length_total_um_est</span><span class='v'>4846.211224674057</span></div><div class='kv'><span class='k'>n_eff_ref</span><span class='v'>2.5775501391825535</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="quarter_wave_resonator_circular_meander" data-section="resonators___assemblies">
+                  <div class="card-top">
+                    <div>
+                      <h2>quarter_wave_resonator_circular_meander</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/quarter_wave_resonator_circular_meander</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/quarter_wave_resonator_circular_meander.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/quarter_wave_resonator_circular_meander.png' alt='quarter_wave_resonator_circular_meander'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-quarter_wave_resonator_circular_meander">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-quarter_wave_resonator_circular_meander" class="doc md" hidden>
+                        <p class='md-p'>λ/4 resonator in a serpentine / hairpin form with end coupler.</p>
+<p class='md-p'>Geometry (serpentine body):<br>    straight(L_coupler_um) + 90° bend + straight(L_s0_um)<br>    → [ 180° bend + straight(seg_length_um) ] × (num_bends - 1)<br>    → 180° bend + straight(leftover_um)</p>
+<p class='md-p'>Total electrical length is kept at λ/4 by reducing only the<br>*last* straight segment (seg_last_um) to make room for:<br><ul class='md-ul'><br><li>one 90° bend</li><br><li>the coupler straight of length L_coupler_um</li><br></ul></p>
+<p class='md-p'>Ports:<br><ul class='md-ul'><br><li>&#x27;input&#x27;    at the start of leftover_straight</li><br><li>&#x27;open_end&#x27; at the end of the coupler straight</li><br></ul></p>
+<p class='md-p'>Raises:<br>    ValueError if:<br><ul class='md-ul'><br><li>num_bends &lt; 1, or</li><br><li>L_target &lt; num_bends * (πR + seg_length_um)  (not enough for serpentine), or</li><br><li>seg_length_um &lt; (πR/2 + L_coupler_um)       (not enough for coupler at end)</li><br></ul></p>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>L_coupler_um</span><span class='v'>100.0</span></div><div class='kv'><span class='k'>L_target_um</span><span class='v'>4153.895335434906</span></div><div class='kv'><span class='k'>bend90_len_um</span><span class='v'>94.24777960769379</span></div><div class='kv'><span class='k'>bend_len_um</span><span class='v'>188.49555921538757</span></div><div class='kv'><span class='k'>eps_eff_ref</span><span class='v'>6.64376472</span></div><div class='kv'><span class='k'>f_target_GHz</span><span class='v'>7.0</span></div><div class='kv'><span class='k'>leftover_um</span><span class='v'>328.67420053488695</span></div><div class='kv'><span class='k'>n_eff_ref</span><span class='v'>2.5775501391825535</span></div><div class='kv'><span class='k'>num_bends</span><span class='v'>6</span></div><div class='kv'><span class='k'>radius_um</span><span class='v'>60.0</span></div><div class='kv'><span class='k'>seg_length_um</span><span class='v'>300.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="meander" data-section="resonators___assemblies">
+                  <div class="card-top">
+                    <div>
+                      <h2>meander</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/meander</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/meander.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/meander.png' alt='meander'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-meander">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-meander" class="doc md" hidden>
+                        <p class='md-p'>Explicit-turn meander.</p>
+<p class='md-p'>Args:<br>    run_length: length of each horizontal run (um).<br>    n_turns: number of U-turns (vertical steps). Horizontal runs = n_turns + 1.<br>    pitch: vertical pitch between adjacent horizontal runs (um).<br>    radius: bend radius for 90-degree turns (um). Requires pitch &gt;= 2*radius.<br>    cross_section: cross_section spec for extrusion.</p>
+<p class='md-p'>Returns:<br>    gf.Component with ports o1/o2.</p>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>end_direction</span><span class='v'>-x</span></div><div class='kv'><span class='k'>kind</span><span class='v'>meander</span></div><div class='kv'><span class='k'>length</span><span class='v'>1985.397</span></div><div class='kv'><span class='k'>mode</span><span class='v'>explicit_turns</span></div><div class='kv'><span class='k'>n_turns</span><span class='v'>5</span></div><div class='kv'><span class='k'>pitch</span><span class='v'>100.0</span></div><div class='kv'><span class='k'>radius</span><span class='v'>50.0</span></div><div class='kv'><span class='k'>run_length</span><span class='v'>200.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="meander_from_steps" data-section="resonators___assemblies">
+                  <div class="card-top">
+                    <div>
+                      <h2>meander_from_steps</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/meander_from_steps</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/meander_from_steps.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/meander_from_steps.png' alt='meander_from_steps'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-meander_from_steps">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-meander_from_steps" class="doc md" hidden>
+                        <p class='md-p'>Build a routed path from dict-only steps (Pydantic-compatible) and extrude with cross_section.</p>
+<p class='md-p'>Supported canonical ops:<br><ul class='md-ul'><br><li>{&quot;op&quot;:&quot;S&quot;,&quot;length&quot;: &lt;um&gt;}</li><br><li>{&quot;op&quot;:&quot;L&quot;,&quot;angle&quot;: &lt;deg&gt;}  # uses default radius</li><br><li>{&quot;op&quot;:&quot;R&quot;,&quot;angle&quot;: &lt;deg&gt;}  # uses default radius</li><br><li>{&quot;op&quot;:&quot;A&quot;,&quot;angle&quot;: &lt;deg&gt;, &quot;radius&quot;: &lt;um optional&gt;}  # arc, per-step radius override</li><br></ul></p>
+<p class='md-p'>Aliases accepted:<br><ul class='md-ul'><br><li>op: &quot;straight&quot;/&quot;left&quot;/&quot;right&quot;/&quot;arc&quot; or &quot;S&quot;/&quot;L&quot;/&quot;R&quot;/&quot;A&quot;</li><br><li>length: &quot;len&quot; / &quot;length&quot;</li><br><li>angle: &quot;deg&quot; / &quot;angle&quot;</li><br><li>radius: &quot;r&quot; / &quot;radius&quot;</li><br></ul></p>
+<p class='md-p'>Args:<br>    steps: list of dict steps (JSON/YAML friendly).<br>    radius: default radius (um) used for L/R and for A if not provided.<br>    cross_section: cross_section spec for extrusion.<br>    allow_non_90: if False, L/R must be exactly 90 degrees (by magnitude).<br>    strict_extra: forbid unknown keys in step dicts.<br>    coerce_numeric_strings: allow numeric strings like &quot;200&quot; -&gt; 200.0.</p>
+<p class='md-p'>Returns:<br>    gf.Component with ports o1/o2.</p>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>allow_non_90</span><span class='v'>True</span></div><div class='kv'><span class='k'>kind</span><span class='v'>meander</span></div><div class='kv'><span class='k'>length</span><span class='v'>3650.796</span></div><div class='kv'><span class='k'>mode</span><span class='v'>steps_dsl</span></div><div class='kv'><span class='k'>n_steps</span><span class='v'>23</span></div><div class='kv'><span class='k'>radius_default</span><span class='v'>100.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="meander_with_bumps" data-section="resonators___assemblies">
+                  <div class="card-top">
+                    <div>
+                      <h2>meander_with_bumps</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/meander_with_bumps</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/meander_with_bumps.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/meander_with_bumps.png' alt='meander_with_bumps'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-meander_with_bumps">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-meander_with_bumps" class="doc md" hidden>
+                        <p class='md-p'>Meandered CPW with periodically placed bump unit cells.</p>
+<p class='md-p'>This cell combines an explicitly defined CPW meander with auxiliary<br>bump structures placed along the same geometric intent path.<br>The CPW is generated using curved turns (via <code class='md-inline'>meander</code>), while<br>bump placement is driven by a matched polyline representation<br>to ensure consistent positioning.</p>
+<p class='md-p'>Geometry:<br><ul class='md-ul'><br><li>Horizontal CPW runs of length <code class='md-inline'>run_length</code></li><br><li><code class='md-inline'>n_turns</code> U-turns with vertical pitch <code class='md-inline'>pitch</code></li><br><li>Each turn is implemented using circular arcs of radius <code class='md-inline'>radius</code></li><br><li>Bumps are placed at regular arclength intervals along the meander</li><br></ul></p>
+<p class='md-p'>Bump placement:<br><ul class='md-ul'><br><li>Bumps are instances of <code class='md-inline'>bump_unit</code></li><br><li>Placement follows the meander centerline</li><br><li>Bumps are offset laterally from the CPW centerline by <code class='md-inline'>bump_offset</code></li><br><li>Placement pitch along the path is set by <code class='md-inline'>bump_pitch</code></li><br><li>Placement can be on the left, right, or both sides of the path</li><br><li>Placement automatically skips corners and starts on the next straight</li><br></ul><br>    segment to avoid turn-related artifacts</p>
+<p class='md-p'>Notes:<br><ul class='md-ul'><br><li>The CPW geometry and bump placement are generated from the same</li><br></ul><br>    parametric intent but use separate constructions:<br><ul class='md-ul'><br><li>CPW: curved path extrusion</li><br><li>Bumps: sampled polyline with arclength-based placement</li><br><li>Bumps are not rotated to follow the path orientation</li><br></ul><br>    (<code class='md-inline'>angle_mode=&quot;none&quot;</code>), making this suitable for symmetric<br>    or rotation-invariant bump designs.</p>
+<p class='md-p'>Args:<br>    run_length: Length of each horizontal CPW run (µm).<br>    n_turns: Number of U-turns in the meander.<br>    pitch: Vertical spacing between adjacent runs (µm).<br>    radius: Radius of the CPW bend arcs (µm). Must satisfy pitch ≥ 2·radius.<br>    bump_radius: Radius of each bump unit cell (µm).<br>    bump_offset: Lateral distance from CPW centerline to bump center (µm).<br>    bump_pitch: Spacing between successive bumps along the path (µm).<br>    bump_side: Side of the CPW on which to place bumps (&quot;left&quot;, &quot;right&quot;, or &quot;both&quot;).</p>
+<p class='md-p'>Returns:<br>    A <code class='md-inline'>gf.Component</code> containing the meandered CPW and associated bump structures.</p>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>bump_angle_mode</span><span class='v'>none</span></div><div class='kv'><span class='k'>bump_corner_guard_um</span><span class='v'>100</span></div><div class='kv'><span class='k'>bump_offset_um</span><span class='v'>100.0</span></div><div class='kv'><span class='k'>bump_pitch_um</span><span class='v'>500.0</span></div><div class='kv'><span class='k'>bump_placement_source</span><span class='v'>polyline_from_meander_intent</span></div><div class='kv'><span class='k'>bump_radius_um</span><span class='v'>50.0</span></div><div class='kv'><span class='k'>bump_side</span><span class='v'>both</span></div><div class='kv'><span class='k'>bump_snap_next</span><span class='v'>True</span></div><div class='kv'><span class='k'>cpw_source</span><span class='v'>meander(explicit_turns)</span></div><div class='kv'><span class='k'>end_direction</span><span class='v'>-x</span></div><div class='kv'><span class='k'>kind</span><span class='v'>meander_with_bumps</span></div><div class='kv'><span class='k'>mode</span><span class='v'>explicit_turns + path_placed_cells</span></div><div class='kv'><span class='k'>n_turns</span><span class='v'>5</span></div><div class='kv'><span class='k'>pitch_um</span><span class='v'>400.0</span></div><div class='kv'><span class='k'>radius_um</span><span class='v'>200.0</span></div><div class='kv'><span class='k'>run_length_um</span><span class='v'>6000.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+            <button class="section" type="button" data-section="3d_objects" aria-expanded="true">
+              <div class="section-title">3D objects</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="bump_unit" data-section="3d_objects">
+                  <div class="card-top">
+                    <div>
+                      <h2>bump_unit</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/bump_unit</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/bump_unit.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/bump_unit.png' alt='bump_unit'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-bump_unit">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-bump_unit" class="doc md" hidden>
+                        <p class='md-p'>Bump unit cell with a circular bump and an octagonal marker.</p>
+<p class='md-p'>Geometry:<br><ul class='md-ul'><br><li>Circle with radius = <code class='md-inline'>radius</code> on <code class='md-inline'>layer_name</code></li><br><li>Regular octagon with circumradius = <code class='md-inline'>radius</code> on <code class='md-inline'>marker_layer_name</code></li><br></ul><br>    (same center as the circle)</p>
+<p class='md-p'>Intended use:<br><ul class='md-ul'><br><li>Circle: physical bump / pad</li><br><li>Octagon: visual marker, alignment, or inspection aid</li><br></ul></p>
+<p class='md-p'>Parameters:<br>  radius: bump radius in um<br>  layer_name: PDK layer name for the bump<br>  marker_layer_name: PDK layer name for the octagon marker</p>
+                      </div>
+
+                      <div class="kvlist"><div class='kv'><span class='k'>layer_name</span><span class='v'>QUB_sig</span></div><div class='kv'><span class='k'>marker_layer_name</span><span class='v'>MRKR_indie_framing</span></div><div class='kv'><span class='k'>marker_shape</span><span class='v'>octagon</span></div><div class='kv'><span class='k'>radius_KOZ</span><span class='v'>100.0</span></div><div class='kv'><span class='k'>radius_um</span><span class='v'>25.0</span></div></div>
+                    </div>
+                  </div>
+                </section>
+                
+            <button class="section" type="button" data-section="outline" aria-expanded="true">
+              <div class="section-title">Outline</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="chip_outline_4mm" data-section="outline">
+                  <div class="card-top">
+                    <div>
+                      <h2>chip_outline_4mm</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/chip_outline_4mm</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/chip_outline_4mm.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/chip_outline_4mm.png' alt='chip_outline_4mm'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-chip_outline_4mm">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-chip_outline_4mm" class="doc md" hidden>
+                        <p class='md-p'>5mm × 5mm chip outline, centered at (0,0).</p>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+            <button class="section" type="button" data-section="couplers_passive" aria-expanded="true">
+              <div class="section-title">Couplers Passive</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="finger_cap__period_3" data-section="couplers_passive">
+                  <div class="card-top">
+                    <div>
+                      <h2>finger cap, period 3</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/finger_cap__period_3</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/finger_cap__period_3.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/finger_cap__period_3.png' alt='finger cap, period 3'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-finger_cap__period_3">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-finger_cap__period_3" class="doc md" hidden>
+                        <p class='md-p'>Finger-cap &quot;clip&quot; structure: a meander nofill etched out from a local ground island,<br>then clipped again by an outer nofill &quot;carve box&quot; inside a cell-sized ground.</p>
+<p class='md-p'>Outputs:<br><ul class='md-ul'><br><li>cpwsig:   (cap_box_gengnd - meander_nofill)</li><br><li>cpwgnd:   (cell_ground_gengnd - carvebox_nofill)</li><br></ul></p>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="finger_cap__period_22" data-section="couplers_passive">
+                  <div class="card-top">
+                    <div>
+                      <h2>finger cap, period 22</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/finger_cap__period_22</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/finger_cap__period_22.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/finger_cap__period_22.png' alt='finger cap, period 22'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-finger_cap__period_22">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-finger_cap__period_22" class="doc md" hidden>
+                        <p class='md-p'>Finger-cap &quot;clip&quot; structure: a meander nofill etched out from a local ground island,<br>then clipped again by an outer nofill &quot;carve box&quot; inside a cell-sized ground.</p>
+<p class='md-p'>Outputs:<br><ul class='md-ul'><br><li>cpwsig:   (cap_box_gengnd - meander_nofill)</li><br><li>cpwgnd:   (cell_ground_gengnd - carvebox_nofill)</li><br></ul></p>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+  </div>
+</div>
+
+<footer>
+  <div>Tip: Host <span class="mono">docs_site/</span> on GitHub Pages or any static host.</div>
+</footer>
+
+<script>
+  const q = document.getElementById('q');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const sections = Array.from(document.querySelectorAll('.section'));
+
+  // Track collapsed state by section id
+  const collapsed = new Map(); // secId -> bool
+
+  function isCardMatch(card, query) {
+    const name = card.querySelector('h2').innerText.toLowerCase();
+    return (!query || name.includes(query));
+  }
+
+  function applyFilterAndCollapse() {
+    const s = q.value.toLowerCase().trim();
+
+    // 1) show/hide cards based on search + collapsed state
+    for (const card of cards) {
+      const secId = card.getAttribute('data-section');
+      const match = isCardMatch(card, s);
+      const isCollapsed = collapsed.get(secId) === true;
+      const show = match && !isCollapsed;
+      card.style.display = show ? '' : 'none';
+    }
+
+    // 2) show/hide section headers if they have any matching cards at all
+    for (const sec of sections) {
+      const secId = sec.getAttribute('data-section');
+      const anyMatch = cards.some(c => c.getAttribute('data-section') === secId && isCardMatch(c, s));
+      sec.style.display = anyMatch ? '' : 'none';
+
+      // keep aria-expanded in sync
+      const isCollapsed = collapsed.get(secId) === true;
+      sec.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+    }
+  }
+
+  // click to toggle section
+  for (const sec of sections) {
+    sec.addEventListener('click', () => {
+      const secId = sec.getAttribute('data-section');
+      collapsed.set(secId, !(collapsed.get(secId) === true)); // toggle
+      applyFilterAndCollapse();
+    });
+  }
+
+  // per-card Doc toggle
+  const docToggles = Array.from(document.querySelectorAll('.doc-toggle'));
+  for (const btn of docToggles) {
+    btn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation(); // don't trigger section toggle
+
+      const targetId = btn.getAttribute('aria-controls');
+      const el = document.getElementById(targetId);
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      if (el) {
+        el.hidden = expanded; // hide when expanded=true -> collapsing
+      }
+    });
+  }
+
+  q.addEventListener('input', applyFilterAndCollapse);
+
+  // init (all expanded)
+  applyFilterAndCollapse();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+layer_stack:
+  Vacuum:
+    layer: [2001, 0]
+    thickness: 1510.4
+    zmin: -750.0
+    material: Vacuum
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [175, 238, 238, 150]
+  QPort_lump:
+    layer: [1291, 0]
+    thickness: 0.0
+    zmin: 0.1
+    material: dont_care
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [0, 250, 0, 150]
+  QPort_wave:
+    layer: [1292, 0]
+    thickness: 200.0
+    zmin: -99.9
+    material: dont_care
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [0, 250, 0, 150]
+  SubstrateQ:
+    layer: [1201, 0]
+    thickness: 750.0
+    zmin: -750.0
+    material: Si_cryo
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [120, 120, 120, 200]
+  QM1F_cpwsig:
+    layer: [1, 0]
+    thickness: 0.2
+    zmin: 0.0
+    material: Al
+    mesh_order: 10
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  QM1F_cpwgnd:
+    layer: [2, 0]
+    thickness: 0.2
+    zmin: 0.0
+    material: Al
+    mesh_order: 10
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  QM1F_gengnd:
+    layer: [8, 0]
+    thickness: 0.2
+    zmin: 0.0
+    material: Al
+    mesh_order: 10
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  QUB_gnd:
+    layer: [42, 0]
+    thickness: 0.0
+    zmin: 0.2
+    material: Al
+    mesh_order: 12
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  QRB_gnd:
+    layer: [22, 0]
+    thickness: 3.0
+    zmin: 0.2
+    material: Al
+    mesh_order: 13
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  QRT_gnd:
+    layer: [32, 0]
+    thickness: 0.3
+    zmin: 3.2
+    material: Al
+    mesh_order: 14
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  QUB_sig:
+    layer: [41, 0]
+    thickness: 10.0
+    zmin: 0.2
+    material: In
+    mesh_order: 12
+    sidewall_angle: 90.0
+    info:
+      color: [180, 180, 180, 255]
+  IM1F_cpwsig:
+    layer: [101, 0]
+    thickness: 0.2
+    zmin: 10.2
+    material: Al
+    mesh_order: 30
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IM1F_cpwgnd:
+    layer: [102, 0]
+    thickness: 0.2
+    zmin: 10.2
+    material: Al
+    mesh_order: 30
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IM1F_gengnd:
+    layer: [108, 0]
+    thickness: 0.2
+    zmin: 10.2
+    material: Al
+    mesh_order: 30
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IUB_gnd:
+    layer: [142, 0]
+    thickness: 0.0
+    zmin: 10.2
+    material: Al
+    mesh_order: 32
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IRB_gnd:
+    layer: [122, 0]
+    thickness: 3.0
+    zmin: 7.2
+    material: Al
+    mesh_order: 33
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IRT_gnd:
+    layer: [132, 0]
+    thickness: 0.3
+    zmin: 6.9
+    material: Al
+    mesh_order: 34
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IPort_lump:
+    layer: [1391, 0]
+    thickness: 0.0
+    zmin: 10.3
+    material: dont_care
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [0, 250, 0, 150]
+  IPort_wave:
+    layer: [1392, 0]
+    thickness: 200.0
+    zmin: -89.7
+    material: dont_care
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [0, 250, 0, 150]
+  SubstrateI:
+    layer: [1301, 0]
+    thickness: 750.0
+    zmin: 10.4
+    material: Si_cryo
+    mesh_order: 0
+    sidewall_angle: 90.0
+    info:
+      color: [120, 120, 120, 200]
+  IM1B_cpwsig:
+    layer: [201, 0]
+    thickness: 0.2
+    zmin: 760.4
+    material: Al
+    mesh_order: 35
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IM1B_cpwgnd:
+    layer: [202, 0]
+    thickness: 0.2
+    zmin: 760.4
+    material: Al
+    mesh_order: 35
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
+  IM1B_gengnd:
+    layer: [208, 0]
+    thickness: 0.2
+    zmin: 760.4
+    material: Al
+    mesh_order: 35
+    sidewall_angle: 90.0
+    info:
+      color: [255, 128, 0, 255]
