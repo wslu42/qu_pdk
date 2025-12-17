@@ -315,9 +315,110 @@
   .section[aria-expanded="false"] .section-caret {
     transform: rotate(-90deg);
   }
+
+  /* Quick Lock Overlay (client-side only) */
+  .lock {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: radial-gradient(900px 600px at 20% 0%, rgba(21,32,52,0.95) 0%, rgba(11,15,20,0.98) 60%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+  }
+
+  .lock[hidden] { display: none; }
+
+  .lock-card {
+    width: min(520px, 100%);
+    background: rgba(18,24,35,0.78);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 16px;
+    padding: 18px 18px 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+  }
+
+  .lock-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin: 0 0 6px;
+  }
+
+  .lock-sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 0 12px;
+  }
+
+  .lock-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .lock-input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(15,21,32,0.8);
+    color: var(--text);
+    outline: none;
+  }
+
+  .lock-btn {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--btn);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .lock-btn:hover { filter: brightness(1.08); }
+
+  .lock-err {
+    margin-top: 10px;
+    min-height: 18px;
+    color: var(--fail);
+    font-size: 12px;
+  }
+
+  .lock-note {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
 </style>
 </head>
 <body>
+  <!-- Quick Lock Overlay (client-side only) -->
+  <div id="lock" class="lock" aria-hidden="false">
+    <div class="lock-card">
+      <div class="lock-title">🔒 Locked</div>
+      <div class="lock-sub">Enter passphrase to view this catalog.</div>
+
+      <form id="lockForm" class="lock-form" autocomplete="off">
+        <input
+          id="lockInput"
+          class="lock-input"
+          type="password"
+          inputmode="text"
+          placeholder="Passphrase"
+          aria-label="Passphrase"
+        />
+        <button class="lock-btn" type="submit">Unlock</button>
+      </form>
+
+      <div id="lockErr" class="lock-err" role="alert" aria-live="polite"></div>
+      <div class="lock-note">Tip: this is a lightweight lock (not real security).</div>
+    </div>
+  </div>
+
 <header>
   <h1>PDK Cells Catalog</h1>
   <p class="sub">Generated: 2025-12-17 13:33:24 • Build: static HTML (matplotlib renderer)</p>
@@ -1063,6 +1164,69 @@ A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patc
 </footer>
 
 <script>
+  // ===== Quick Lock (client-side only; not real security) =====
+  const LOCK_KEY = "pdk_catalog_unlocked_v1";
+  const PASS_HASH_HEX = "4cfc6666a27d7182247b565967e6b7476f81a62b5c338d694cbe9e929c1da7ff";
+
+  async function sha256Hex(str) {
+    const enc = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest("SHA-256", enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  function showLock(show) {
+    const lock = document.getElementById("lock");
+    if (!lock) return;
+    lock.hidden = !show;
+    lock.setAttribute("aria-hidden", show ? "false" : "true");
+    // prevent scrolling when locked
+    document.documentElement.style.overflow = show ? "hidden" : "";
+    document.body.style.overflow = show ? "hidden" : "";
+  }
+
+  function initLock() {
+    // If already unlocked in this tab session, hide lock
+    if (sessionStorage.getItem(LOCK_KEY) === "1") {
+      showLock(false);
+      return;
+    }
+    showLock(true);
+
+    const form = document.getElementById("lockForm");
+    const input = document.getElementById("lockInput");
+    const err = document.getElementById("lockErr");
+
+    // focus input on load
+    setTimeout(() => input?.focus(), 50);
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      err.textContent = "";
+
+      const guess = (input?.value ?? "").trim();
+      if (!guess) {
+        err.textContent = "Enter a passphrase.";
+        input?.focus();
+        return;
+      }
+
+      const h = await sha256Hex(guess);
+      if (h === PASS_HASH_HEX) {
+        sessionStorage.setItem(LOCK_KEY, "1");
+        input.value = "";
+        showLock(false);
+      } else {
+        err.textContent = "Wrong passphrase.";
+        input.value = "";
+        input?.focus();
+      }
+    });
+  }
+
+  // lock early (before rest of JS runs)
+  document.addEventListener("DOMContentLoaded", initLock);
+  // ===== End Quick Lock =====
+
   const q = document.getElementById('q');
   const cards = Array.from(document.querySelectorAll('.card'));
   const sections = Array.from(document.querySelectorAll('.section'));
