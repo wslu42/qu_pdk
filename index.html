@@ -315,113 +315,12 @@
   .section[aria-expanded="false"] .section-caret {
     transform: rotate(-90deg);
   }
-
-  /* Quick Lock Overlay (client-side only) */
-  .lock {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: radial-gradient(900px 600px at 20% 0%, rgba(21,32,52,0.95) 0%, rgba(11,15,20,0.98) 60%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
-  }
-
-  .lock[hidden] { display: none; }
-
-  .lock-card {
-    width: min(520px, 100%);
-    background: rgba(18,24,35,0.78);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 16px;
-    padding: 18px 18px 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 18px 60px rgba(0,0,0,0.45);
-  }
-
-  .lock-title {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    margin: 0 0 6px;
-  }
-
-  .lock-sub {
-    color: var(--muted);
-    font-size: 13px;
-    margin: 0 0 12px;
-  }
-
-  .lock-form {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-
-  .lock-input {
-    flex: 1;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: rgba(15,21,32,0.8);
-    color: var(--text);
-    outline: none;
-  }
-
-  .lock-btn {
-    padding: 10px 12px;
-    border-radius: 10px;
-    background: var(--btn);
-    border: 1px solid var(--border);
-    color: var(--text);
-    cursor: pointer;
-  }
-
-  .lock-btn:hover { filter: brightness(1.08); }
-
-  .lock-err {
-    margin-top: 10px;
-    min-height: 18px;
-    color: var(--fail);
-    font-size: 12px;
-  }
-
-  .lock-note {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 12px;
-  }
-
 </style>
 </head>
 <body>
-  <!-- Quick Lock Overlay (client-side only) -->
-  <div id="lock" class="lock" aria-hidden="false">
-    <div class="lock-card">
-      <div class="lock-title">🔒 Locked</div>
-      <div class="lock-sub">Enter passphrase to view this catalog.</div>
-
-      <form id="lockForm" class="lock-form" autocomplete="off">
-        <input
-          id="lockInput"
-          class="lock-input"
-          type="password"
-          inputmode="text"
-          placeholder="Passphrase"
-          aria-label="Passphrase"
-        />
-        <button class="lock-btn" type="submit">Unlock</button>
-      </form>
-
-      <div id="lockErr" class="lock-err" role="alert" aria-live="polite"></div>
-      <div class="lock-note">Tip: this is a lightweight lock (not real security).</div>
-    </div>
-  </div>
-
 <header>
   <h1>PDK Cells Catalog</h1>
-  <p class="sub">Generated: 2025-12-17 13:33:24 • Build: static HTML (matplotlib renderer)</p>
+  <p class="sub">Generated: 2026-01-06 22:14:17 • Build: static HTML (matplotlib renderer)</p>
 </header>
 
 <div class="wrap">
@@ -767,6 +666,142 @@ A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patc
                   </div>
                 </section>
                 
+            <button class="section" type="button" data-section="qubit_capacitators" aria-expanded="true">
+              <div class="section-title">Qubit Capacitators</div>
+              <div class="section-line"></div>
+              <div class="section-caret" aria-hidden="true">▾</div>
+            </button>
+            
+                <section class="card" id="qubit_cap_generic" data-section="qubit_capacitators">
+                  <div class="card-top">
+                    <div>
+                      <h2>qubit_cap_generic</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/qubit_cap_generic</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/qubit_cap_generic.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/qubit_cap_generic.png' alt='qubit_cap_generic'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-qubit_cap_generic">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-qubit_cap_generic" class="doc md" hidden>
+                        <p class='md-p'>Canonical PDK Cell: Generic Qubit Capacitor Pocket</p>
+<p class='md-p'>This cell defines the **standard, reusable qubit capacitor pocket geometry**<br>for the PDK. It serves as the *canonical reference implementation* for<br>lumped-element superconducting qubits that couple to both a readout resonator<br>and a charge/drive line.</p>
+<p class='md-p'>The cell is designed to be **process-agnostic, hierarchy-safe, and composable**,<br>and is intended to be instantiated by higher-level qubit, test-structure,<br>and experiment-chip layouts without modification.</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Geometry Overview<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>The cell constructs the following elements, centered at the origin:</p>
+<p class='md-p'>• Capacitor structure<br><ul class='md-ul'><br><li>Two large capacitor pads arranged vertically</li><br></ul><br>    • Top pad: signal island<br>    • Bottom pad: ground island<br><ul class='md-ul'><br><li>Pads are rounded rectangles to reduce current crowding</li><br><li>Vertical spacing reserves a central JJ region</li><br></ul></p>
+<p class='md-p'>• Josephson-junction connection arms<br><ul class='md-ul'><br><li>Narrow rectangular arms extending from each pad toward the center</li><br><li>90° fillet cutouts applied at pad–arm junctions</li><br><li>Final JJ placement is expected to occur at a higher abstraction level</li><br></ul></p>
+<p class='md-p'>• Resonator antenna (readout coupling)<br><ul class='md-ul'><br><li>Rectangular coupling pad attached to the top capacitor</li><br><li>Connected to a CPW straight section for routing to a resonator</li><br></ul></p>
+<p class='md-p'>• Charge antenna (drive / flux / charge coupling)<br><ul class='md-ul'><br><li>Rectangular coupling pad attached to the bottom capacitor</li><br><li>Connected to a CPW straight section for routing to control circuitry</li><br></ul></p>
+<p class='md-p'>• No-fill regions<br><ul class='md-ul'><br><li>Local no-fill keep-outs around each antenna pad</li><br><li>A global no-fill pocket enclosing the full capacitor structure</li><br></ul></p>
+<p class='md-p'>• Chip outline / ground boundary<br><ul class='md-ul'><br><li>Rectangular outline sized to fully enclose the pocket and routing margins</li><br><li>Intended as a local ground reference, not a full die outline</li><br></ul></p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Design Intent<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>This cell intentionally separates **geometry definition** from:</p>
+<p class='md-p'>• Josephson junction fabrication details<br>• Resonator layout and impedance engineering<br>• Global ground stitching and via strategies<br>• Boolean cleanup or process-specific metal merging</p>
+<p class='md-p'>By doing so, it provides a stable and predictable geometry primitive that:</p>
+<p class='md-p'>• Survives hierarchy flattening or reuse<br>• Can be embedded into multiple chip contexts<br>• Supports process variation through parameter tuning<br>• Avoids hidden boolean side effects</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Parameters<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>Resonator antenna<br>• <code class='md-inline'>res_antenna_width</code>      : Width of the resonator antenna pad (µm)<br>• <code class='md-inline'>res_antenna_height</code>     : Height of the resonator antenna pad (µm)<br>• <code class='md-inline'>res_antenna_offset_x</code>   : X-offset from qubit center (µm)<br>• <code class='md-inline'>res_antenna_offset_y</code>   : Y-offset from qubit center (µm)<br>• <code class='md-inline'>res_straight_len</code>       : Length of CPW straight attached to antenna (µm)</p>
+<p class='md-p'>Charge antenna<br>• <code class='md-inline'>charge_antenna_width</code>   : Width of the charge antenna pad (µm)<br>• <code class='md-inline'>charge_antenna_height</code>  : Height of the charge antenna pad (µm)<br>• <code class='md-inline'>charge_antenna_offset_x</code>: X-offset from qubit center (µm)<br>• <code class='md-inline'>charge_antenna_offset_y</code>: Y-offset from qubit center (µm)<br>• <code class='md-inline'>charge_straight_len</code>    : Length of CPW straight attached to antenna (µm)</p>
+<p class='md-p'>Capacitor pocket<br>• <code class='md-inline'>qb_cap_spacing</code>         : Vertical gap between capacitor pads (µm)<br>• <code class='md-inline'>qb_cap_width</code>           : Capacitor pad width (µm)<br>• <code class='md-inline'>qb_cap_height</code>          : Capacitor pad height (µm)<br>• <code class='md-inline'>jj_gap</code>                 : Reserved JJ opening between pads (µm)</p>
+<p class='md-p'>No-fill / ground margins<br>• <code class='md-inline'>qb_nofill_extent</code>       : Margin added to global no-fill region (µm)<br>• <code class='md-inline'>qb_ground_extent</code>       : Margin between no-fill and chip outline (µm)</p>
+<p class='md-p'>Corner / fillet geometry<br>• <code class='md-inline'>cap_radius</code>             : Corner radius of capacitor pads (µm)<br>• <code class='md-inline'>cap_arc_pts</code>            : Polygon resolution for rounded corners<br>• <code class='md-inline'>fillet_radius</code>          : Radius of JJ-arm fillet cutouts (µm)<br>• <code class='md-inline'>antenna_radius</code>         : Corner radius of antenna pads (µm)<br>• <code class='md-inline'>nofill_pad</code>             : Padding for local antenna no-fill regions (µm)<br>• <code class='md-inline'>nofill_radius_small</code>    : Radius for local no-fill corners (µm)<br>• <code class='md-inline'>nofill_radius_big</code>      : Radius for global no-fill corners (µm)</p>
+<p class='md-p'>Outline margin<br>• <code class='md-inline'>chip_outline_extra_y</code>   : Additional Y-margin for routing clearance (µm)</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Ports<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>The following named ports are exposed for integration:</p>
+<p class='md-p'>• <code class='md-inline'>qb_sig_jj</code>    : JJ connection point on the signal (top) arm<br>• <code class='md-inline'>qb_gnd_jj</code>    : JJ connection point on the ground (bottom) arm<br>• <code class='md-inline'>res_o2</code>       : Output port of the resonator antenna CPW<br>• <code class='md-inline'>charge_o2</code>    : Output port of the charge antenna CPW</p>
+<p class='md-p'>Additional pad-edge ports (<code class='md-inline'>cap_u_*</code>, <code class='md-inline'>cap_d_*</code>) are provided for debugging<br>and advanced attachment use cases.</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Returns<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>A <code class='md-inline'>gdsfactory.Component</code> implementing the complete qubit capacitor pocket.</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>PDK Policy Notes<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>• This cell is **authoritative** for generic qubit pocket geometry<br>• It should not be boolean-merged with JJ, resonators, or ground planes here<br>• Process- or fab-specific variations should be implemented via wrappers<br>or derived cells, not by modifying this definition directly<br>• Downstream LVS / DRC flows should treat this cell as a trusted primitive</p>
+<p class='md-p'>────────────────────────────────────────────────────────</p>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section class="card" id="qubit_cap_high_EC" data-section="qubit_capacitators">
+                  <div class="card-top">
+                    <div>
+                      <h2>qubit_cap_high_EC</h2>
+                      <div class="meta">
+                        <span class="pill ok">OK</span>
+                        <span class="mono">/qubit_cap_high_EC</span>
+                      </div>
+                    </div>
+                    <div class="actions">
+                      <a class='btn' href='assets/cells/qubit_cap_high_EC.gds' download>Download GDS</a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="preview"><img class='thumb' src='assets/cells/qubit_cap_high_EC.png' alt='qubit_cap_high_EC'></div>
+
+                    <div class="info">
+                      <div class="info-head">
+                        <h3>Cell Info</h3>
+                        <button class="doc-toggle" type="button" aria-expanded="false" aria-controls="doc-qubit_cap_high_EC">
+                          Doc <span class="doc-caret" aria-hidden="true">▾</span>
+                        </button>
+                      </div>
+
+                      <div id="doc-qubit_cap_high_EC" class="doc md" hidden>
+                        <p class='md-p'>Canonical PDK Cell: Generic Qubit Capacitor Pocket</p>
+<p class='md-p'>This cell defines the **standard, reusable qubit capacitor pocket geometry**<br>for the PDK. It serves as the *canonical reference implementation* for<br>lumped-element superconducting qubits that couple to both a readout resonator<br>and a charge/drive line.</p>
+<p class='md-p'>The cell is designed to be **process-agnostic, hierarchy-safe, and composable**,<br>and is intended to be instantiated by higher-level qubit, test-structure,<br>and experiment-chip layouts without modification.</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Geometry Overview<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>The cell constructs the following elements, centered at the origin:</p>
+<p class='md-p'>• Capacitor structure<br><ul class='md-ul'><br><li>Two large capacitor pads arranged vertically</li><br></ul><br>    • Top pad: signal island<br>    • Bottom pad: ground island<br><ul class='md-ul'><br><li>Pads are rounded rectangles to reduce current crowding</li><br><li>Vertical spacing reserves a central JJ region</li><br></ul></p>
+<p class='md-p'>• Josephson-junction connection arms<br><ul class='md-ul'><br><li>Narrow rectangular arms extending from each pad toward the center</li><br><li>90° fillet cutouts applied at pad–arm junctions</li><br><li>Final JJ placement is expected to occur at a higher abstraction level</li><br></ul></p>
+<p class='md-p'>• Resonator antenna (readout coupling)<br><ul class='md-ul'><br><li>Rectangular coupling pad attached to the top capacitor</li><br><li>Connected to a CPW straight section for routing to a resonator</li><br></ul></p>
+<p class='md-p'>• Charge antenna (drive / flux / charge coupling)<br><ul class='md-ul'><br><li>Rectangular coupling pad attached to the bottom capacitor</li><br><li>Connected to a CPW straight section for routing to control circuitry</li><br></ul></p>
+<p class='md-p'>• No-fill regions<br><ul class='md-ul'><br><li>Local no-fill keep-outs around each antenna pad</li><br><li>A global no-fill pocket enclosing the full capacitor structure</li><br></ul></p>
+<p class='md-p'>• Chip outline / ground boundary<br><ul class='md-ul'><br><li>Rectangular outline sized to fully enclose the pocket and routing margins</li><br><li>Intended as a local ground reference, not a full die outline</li><br></ul></p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Design Intent<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>This cell intentionally separates **geometry definition** from:</p>
+<p class='md-p'>• Josephson junction fabrication details<br>• Resonator layout and impedance engineering<br>• Global ground stitching and via strategies<br>• Boolean cleanup or process-specific metal merging</p>
+<p class='md-p'>By doing so, it provides a stable and predictable geometry primitive that:</p>
+<p class='md-p'>• Survives hierarchy flattening or reuse<br>• Can be embedded into multiple chip contexts<br>• Supports process variation through parameter tuning<br>• Avoids hidden boolean side effects</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Parameters<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>Resonator antenna<br>• <code class='md-inline'>res_antenna_width</code>      : Width of the resonator antenna pad (µm)<br>• <code class='md-inline'>res_antenna_height</code>     : Height of the resonator antenna pad (µm)<br>• <code class='md-inline'>res_antenna_offset_x</code>   : X-offset from qubit center (µm)<br>• <code class='md-inline'>res_antenna_offset_y</code>   : Y-offset from qubit center (µm)<br>• <code class='md-inline'>res_straight_len</code>       : Length of CPW straight attached to antenna (µm)</p>
+<p class='md-p'>Charge antenna<br>• <code class='md-inline'>charge_antenna_width</code>   : Width of the charge antenna pad (µm)<br>• <code class='md-inline'>charge_antenna_height</code>  : Height of the charge antenna pad (µm)<br>• <code class='md-inline'>charge_antenna_offset_x</code>: X-offset from qubit center (µm)<br>• <code class='md-inline'>charge_antenna_offset_y</code>: Y-offset from qubit center (µm)<br>• <code class='md-inline'>charge_straight_len</code>    : Length of CPW straight attached to antenna (µm)</p>
+<p class='md-p'>Capacitor pocket<br>• <code class='md-inline'>qb_cap_spacing</code>         : Vertical gap between capacitor pads (µm)<br>• <code class='md-inline'>qb_cap_width</code>           : Capacitor pad width (µm)<br>• <code class='md-inline'>qb_cap_height</code>          : Capacitor pad height (µm)<br>• <code class='md-inline'>jj_gap</code>                 : Reserved JJ opening between pads (µm)</p>
+<p class='md-p'>No-fill / ground margins<br>• <code class='md-inline'>qb_nofill_extent</code>       : Margin added to global no-fill region (µm)<br>• <code class='md-inline'>qb_ground_extent</code>       : Margin between no-fill and chip outline (µm)</p>
+<p class='md-p'>Corner / fillet geometry<br>• <code class='md-inline'>cap_radius</code>             : Corner radius of capacitor pads (µm)<br>• <code class='md-inline'>cap_arc_pts</code>            : Polygon resolution for rounded corners<br>• <code class='md-inline'>fillet_radius</code>          : Radius of JJ-arm fillet cutouts (µm)<br>• <code class='md-inline'>antenna_radius</code>         : Corner radius of antenna pads (µm)<br>• <code class='md-inline'>nofill_pad</code>             : Padding for local antenna no-fill regions (µm)<br>• <code class='md-inline'>nofill_radius_small</code>    : Radius for local no-fill corners (µm)<br>• <code class='md-inline'>nofill_radius_big</code>      : Radius for global no-fill corners (µm)</p>
+<p class='md-p'>Outline margin<br>• <code class='md-inline'>chip_outline_extra_y</code>   : Additional Y-margin for routing clearance (µm)</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Ports<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>The following named ports are exposed for integration:</p>
+<p class='md-p'>• <code class='md-inline'>qb_sig_jj</code>    : JJ connection point on the signal (top) arm<br>• <code class='md-inline'>qb_gnd_jj</code>    : JJ connection point on the ground (bottom) arm<br>• <code class='md-inline'>res_o2</code>       : Output port of the resonator antenna CPW<br>• <code class='md-inline'>charge_o2</code>    : Output port of the charge antenna CPW</p>
+<p class='md-p'>Additional pad-edge ports (<code class='md-inline'>cap_u_*</code>, <code class='md-inline'>cap_d_*</code>) are provided for debugging<br>and advanced attachment use cases.</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>Returns<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>A <code class='md-inline'>gdsfactory.Component</code> implementing the complete qubit capacitor pocket.</p>
+<p class='md-p'>────────────────────────────────────────────────────────<br>PDK Policy Notes<br>────────────────────────────────────────────────────────</p>
+<p class='md-p'>• This cell is **authoritative** for generic qubit pocket geometry<br>• It should not be boolean-merged with JJ, resonators, or ground planes here<br>• Process- or fab-specific variations should be implemented via wrappers<br>or derived cells, not by modifying this definition directly<br>• Downstream LVS / DRC flows should treat this cell as a trusted primitive</p>
+<p class='md-p'>────────────────────────────────────────────────────────</p>
+                      </div>
+
+                      <div class="kvlist"><div class='muted'>No cell info</div></div>
+                    </div>
+                  </div>
+                </section>
+                
             <button class="section" type="button" data-section="resonators___assemblies" aria-expanded="true">
               <div class="section-title">Resonators / assemblies</div>
               <div class="section-line"></div>
@@ -875,12 +910,10 @@ A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patc
                       </div>
 
                       <div id="doc-meander" class="doc md" hidden>
-                        <p class='md-p'>Explicit-turn meander.</p>
-<p class='md-p'>Args:<br>    run_length: length of each horizontal run (um).<br>    n_turns: number of U-turns (vertical steps). Horizontal runs = n_turns + 1.<br>    pitch: vertical pitch between adjacent horizontal runs (um).<br>    radius: bend radius for 90-degree turns (um). Requires pitch &gt;= 2*radius.<br>    cross_section: cross_section spec for extrusion.</p>
-<p class='md-p'>Returns:<br>    gf.Component with ports o1/o2.</p>
+                        <div class='muted'>No docstring</div>
                       </div>
 
-                      <div class="kvlist"><div class='kv'><span class='k'>end_direction</span><span class='v'>-x</span></div><div class='kv'><span class='k'>kind</span><span class='v'>meander</span></div><div class='kv'><span class='k'>length</span><span class='v'>1985.397</span></div><div class='kv'><span class='k'>mode</span><span class='v'>explicit_turns</span></div><div class='kv'><span class='k'>n_turns</span><span class='v'>5</span></div><div class='kv'><span class='k'>pitch</span><span class='v'>100.0</span></div><div class='kv'><span class='k'>radius</span><span class='v'>50.0</span></div><div class='kv'><span class='k'>run_length</span><span class='v'>200.0</span></div></div>
+                      <div class="kvlist"><div class='kv'><span class='k'>length</span><span class='v'>1985.397</span></div></div>
                     </div>
                   </div>
                 </section>
@@ -1164,69 +1197,6 @@ A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patc
 </footer>
 
 <script>
-  // ===== Quick Lock (client-side only; not real security) =====
-  const LOCK_KEY = "pdk_catalog_unlocked_v1";
-  const PASS_HASH_HEX = "4cfc6666a27d7182247b565967e6b7476f81a62b5c338d694cbe9e929c1da7ff";
-
-  async function sha256Hex(str) {
-    const enc = new TextEncoder().encode(str);
-    const buf = await crypto.subtle.digest("SHA-256", enc);
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
-  }
-
-  function showLock(show) {
-    const lock = document.getElementById("lock");
-    if (!lock) return;
-    lock.hidden = !show;
-    lock.setAttribute("aria-hidden", show ? "false" : "true");
-    // prevent scrolling when locked
-    document.documentElement.style.overflow = show ? "hidden" : "";
-    document.body.style.overflow = show ? "hidden" : "";
-  }
-
-  function initLock() {
-    // If already unlocked in this tab session, hide lock
-    if (sessionStorage.getItem(LOCK_KEY) === "1") {
-      showLock(false);
-      return;
-    }
-    showLock(true);
-
-    const form = document.getElementById("lockForm");
-    const input = document.getElementById("lockInput");
-    const err = document.getElementById("lockErr");
-
-    // focus input on load
-    setTimeout(() => input?.focus(), 50);
-
-    form?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      err.textContent = "";
-
-      const guess = (input?.value ?? "").trim();
-      if (!guess) {
-        err.textContent = "Enter a passphrase.";
-        input?.focus();
-        return;
-      }
-
-      const h = await sha256Hex(guess);
-      if (h === PASS_HASH_HEX) {
-        sessionStorage.setItem(LOCK_KEY, "1");
-        input.value = "";
-        showLock(false);
-      } else {
-        err.textContent = "Wrong passphrase.";
-        input.value = "";
-        input?.focus();
-      }
-    });
-  }
-
-  // lock early (before rest of JS runs)
-  document.addEventListener("DOMContentLoaded", initLock);
-  // ===== End Quick Lock =====
-
   const q = document.getElementById('q');
   const cards = Array.from(document.querySelectorAll('.card'));
   const sections = Array.from(document.querySelectorAll('.section'));
