@@ -1337,6 +1337,35 @@ A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patc
   }
 
   <script>
+    const PASS_OK = "你找回來的passphrase"; // 或你原本的 hash 比對方式
+    const KEY = "pdk_catalog_unlocked_v1";
+
+    let unlocked = (localStorage.getItem(KEY) === "1");
+    let unlockingNow = false; // 防止重入（非常重要）
+
+    function ensureUnlocked() {
+      if (unlocked || unlockingNow) return true;
+
+      unlockingNow = true;
+      const input = window.prompt("Enter passphrase:");
+      if (input === null) { unlockingNow = false; return false; }
+
+      if (input === PASS_OK) {
+        unlocked = true;
+        localStorage.setItem(KEY, "1");
+        hideLockOverlay();     // 如果你有 overlay
+        showCatalog();         // 你原本顯示內容的函式
+        unlockingNow = false;
+        return true;
+      }
+
+      alert("Wrong passphrase");
+      unlockingNow = false;
+      return false;
+    }
+  </script>
+
+  <script>
   /* ===== Quick Lock (client-side only; not real security) ===== */
   const LOCK_KEY = "pdk_catalog_unlocked_v1";
 
