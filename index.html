@@ -315,9 +315,103 @@
   .section[aria-expanded="false"] .section-caret {
     transform: rotate(-90deg);
   }
+
+  /* ===== Quick Lock Overlay (client-side only) ===== */
+  .lock {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 14, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .lock[hidden] { display: none; }
+
+  .lock-card {
+    width: 320px;
+    max-width: calc(100vw - 32px);
+    padding: 22px 20px 18px;
+    background: rgba(18,24,35,0.95);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    text-align: center;
+  }
+
+  .lock-title {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .lock-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .lock-form {
+    display: flex;
+    gap: 8px;
+  }
+
+  .lock-input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: var(--text);
+    outline: none;
+  }
+
+  .lock-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--btn);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .lock-btn:hover { filter: brightness(1.1); }
+
+  .lock-err {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--fail);
+    min-height: 1em;
+  }
+
+  .lock-note {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted);
+  }
 </style>
 </head>
 <body>
+  <!-- ===== Quick Lock Overlay (client-side only) ===== -->
+  <div id="lock" class="lock" aria-hidden="false">
+    <div class="lock-card">
+      <div class="lock-title">🔒 Locked</div>
+      <div class="lock-sub">Enter passphrase to view this catalog.</div>
+
+      <form id="lockForm" class="lock-form" autocomplete="off">
+        <input
+          id="lockInput"
+          class="lock-input"
+          type="password"
+          placeholder="Passphrase"
+        />
+        <button class="lock-btn" type="submit">Unlock</button>
+      </form>
+
+      <div id="lockErr" class="lock-err"></div>
+      <div class="lock-note">Lightweight client-side lock (not real security).</div>
+    </div>
+  </div>
 <header>
   <h1>PDK Cells Catalog</h1>
   <p class="sub">Generated: 2026-01-07 21:07:52 • Build: static HTML (matplotlib renderer)</p>
@@ -1241,6 +1335,73 @@ A <code class='md-inline'>gf.Component</code> containing the JJ cross + bar patc
       applyFilterAndCollapse();
     });
   }
+
+  <script>
+  /* ===== Quick Lock (client-side only; not real security) ===== */
+  const LOCK_KEY = "pdk_catalog_unlocked_v1";
+
+  /*
+    ⚠️ 這是 passphrase 的 SHA-256 hex
+    你可以之後換成你真正要用的 hash
+  */
+  const PASS_HASH_HEX =
+    "4cfc6666a27d7182247b565967e6b7476f81a62b5c338d694cbe9e929c1da7ff";
+
+  async function sha256Hex(str) {
+    const enc = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest("SHA-256", enc);
+    return Array.from(new Uint8Array(buf))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  function showLock(show) {
+    const lock = document.getElementById("lock");
+    if (!lock) return;
+    lock.hidden = !show;
+    lock.setAttribute("aria-hidden", show ? "false" : "true");
+
+    document.documentElement.style.overflow = show ? "hidden" : "";
+    document.body.style.overflow = show ? "hidden" : "";
+  }
+
+  function initLock() {
+    if (sessionStorage.getItem(LOCK_KEY) === "1") {
+      showLock(false);
+      return;
+    }
+
+    showLock(true);
+
+    const form = document.getElementById("lockForm");
+    const input = document.getElementById("lockInput");
+    const err = document.getElementById("lockErr");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      err.textContent = "";
+
+      const guess = (input.value || "").trim();
+      if (!guess) {
+        err.textContent = "Enter a passphrase.";
+        return;
+      }
+
+      const h = await sha256Hex(guess);
+      if (h === PASS_HASH_HEX) {
+        sessionStorage.setItem(LOCK_KEY, "1");
+        input.value = "";
+        showLock(false);
+      } else {
+        err.textContent = "Wrong passphrase.";
+        input.value = "";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initLock);
+  /* ===== End Quick Lock ===== */
+  </script>
 
   // per-card Doc toggle
   const docToggles = Array.from(document.querySelectorAll('.doc-toggle'));
