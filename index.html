@@ -1360,8 +1360,8 @@ const LOCK_KEY = "pdk_catalog_unlocked_v1";
   你要換成你真正 passphrase 的 hash
 */
 const PASS_HASH_HEX =
-  "4cfc6666a27d7182247b565967e6b7476f81a62b5c338d694cbe9e929c1da7ff";
-
+  // "4cfc6666a27d7182247b565967e6b7476f81a62b5c338d694cbe9e929c1da7ff";
+  "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
 async function sha256Hex(str) {
   const enc = new TextEncoder().encode(str);
   const buf = await crypto.subtle.digest("SHA-256", enc);
