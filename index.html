@@ -420,28 +420,109 @@
   .section[aria-expanded="false"] .section-caret {
     transform: rotate(-90deg);
   }
+
+  /* ===== Lock overlay ===== */
+  .locked .wrap, .locked header, .locked footer {
+    filter: blur(10px) brightness(0.85);
+    pointer-events: none;
+    user-select: none;
+  }
+  .lock-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(7,10,14,0.62);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+  }
+  .locked .lock-overlay {
+    display: flex;
+  }
+  .lock-card {
+    width: min(560px, 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(18,24,35,0.88);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.55);
+    padding: 16px 16px 14px;
+  }
+  .lock-title {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+  .lock-sub {
+    color: rgba(154,167,189,0.95);
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .lock-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .lock-input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(15,21,32,0.70);
+    color: var(--text);
+    outline: none;
+  }
+  .lock-btn {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(31,42,58,0.85);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .lock-btn:hover { filter: brightness(1.10); }
+  .lock-err {
+    margin-top: 10px;
+    min-height: 16px;
+    font-size: 12px;
+    color: rgba(255,92,92,0.95);
+  }
+  .lock-foot {
+    margin-top: 10px;
+    color: rgba(154,167,189,0.75);
+    font-size: 11px;
+  }
 </style>
 </head>
 <body>
-<!-- ===== Quick Lock Overlay (client-side only) ===== -->
-<div id="lock" class="lock" aria-hidden="true" hidden>
-  <div class="lock-card">
-    <div class="lock-title">🔒 Locked</div>
-    <div class="lock-sub">Enter passphrase to view this catalog.</div>
+<div id="lockOverlay" class="lock-overlay" aria-hidden="false">
+  <div class="lock-card" role="dialog" aria-modal="true" aria-label="Protected content">
+    <div class="lock-title">Protected Page</div>
+    <div class="lock-sub">This catalog is restricted. Enter access key.</div>
 
-    <form id="lockForm" class="lock-form" autocomplete="off">
-      <input id="lockInput" class="lock-input" type="password" placeholder="Passphrase" />
-      <button class="lock-btn" type="submit">Unlock</button>
-    </form>
+    <div class="lock-row">
+      <input id="lockInput" class="lock-input" type="password" autocomplete="current-password"
+             placeholder="Access key" aria-label="Access key" />
+      <button id="lockBtn" class="lock-btn" type="button">Unlock</button>
+    </div>
 
-    <div id="lockErr" class="lock-err"></div>
-    <div class="lock-note">Client-side SHA-256 lock (not real security).</div>
+    <div id="lockErr" class="lock-err" role="status" aria-live="polite"></div>
+
+    <div class="lock-foot mono">
+      SHA-256 gate • local-only • remember on this browser
+    </div>
   </div>
 </div>
 
 <header>
   <h1>PDK Cells Catalog</h1>
-  <p class="sub">Generated: 2026-02-03 20:45:47 • Build: static HTML (matplotlib renderer)</p>
+  <p class="sub">Generated: 2026-02-03 21:03:14 • Build: static HTML (matplotlib renderer)</p>
 </header>
 
 <div class="wrap">
@@ -2385,7 +2466,7 @@
     <div class='chipbar' aria-label='Quick navigation'><button class='chip' type='button' data-target-tab='tab-params-side_coupled_meander_chip'>Params (21)</button><button class='chip' type='button' data-target-tab='tab-ports-side_coupled_meander_chip'>Ports</button><button class='chip' type='button' data-target-tab='tab-layers-side_coupled_meander_chip'>Layers (2)</button><button class='chip' type='button' data-target-tab='tab-notes-side_coupled_meander_chip'>Notes (2)</button><button class='chip' type='button' data-target-tab='tab-metadata-side_coupled_meander_chip'>Metadata (1)</button></div>
     <div id="panel-info-side_coupled_meander_chip" class="tab-panel ".strip()
                  role="tabpanel" aria-labelledby="tab-info-side_coupled_meander_chip" >
-              <div class='kvlist'><div class='kv'><span class='k'>apply_ground_boolean</span><span class='v'>True</span></div><div class='kv'><span class='k'>cell_type</span><span class='v'>side_coupled_meander_chip</span></div><div class='kv'><span class='k'>chip_h_um</span><span class='v'>9820.7658</span></div><div class='kv'><span class='k'>chip_w_um</span><span class='v'>4356.9324</span></div><div class='kv'><span class='k'>gap_um</span><span class='v'>0.6</span></div><div class='kv'><span class='k'>linewidth_um</span><span class='v'>1.0</span></div><div class='kv'><span class='k'>n_turns</span><span class='v'>8</span></div><div class='kv'><span class='k'>pitch_um</span><span class='v'>360.0</span></div><div class='kv'><span class='k'>radius_um</span><span class='v'>180.0</span></div><div class='kv'><span class='k'>run_length_um</span><span class='v'>5000.0</span></div><div class='kv'><span class='k'>turn_angle_deg</span><span class='v'>90.9</span></div><div class='kv'><span class='k'>unitcell_pitch_um</span><span class='v'>30.0</span></div><div class='kv'><span class='k'>unitcell_start_s_um</span><span class='v'>6.0</span></div></div>
+              <div class='kvlist'><div class='kv'><span class='k'>apply_ground_boolean</span><span class='v'>False</span></div><div class='kv'><span class='k'>cell_type</span><span class='v'>side_coupled_meander_chip</span></div><div class='kv'><span class='k'>chip_h_um</span><span class='v'>9820.7658</span></div><div class='kv'><span class='k'>chip_w_um</span><span class='v'>4356.9324</span></div><div class='kv'><span class='k'>gap_um</span><span class='v'>0.6</span></div><div class='kv'><span class='k'>linewidth_um</span><span class='v'>1.0</span></div><div class='kv'><span class='k'>n_turns</span><span class='v'>8</span></div><div class='kv'><span class='k'>pitch_um</span><span class='v'>360.0</span></div><div class='kv'><span class='k'>radius_um</span><span class='v'>180.0</span></div><div class='kv'><span class='k'>run_length_um</span><span class='v'>5000.0</span></div><div class='kv'><span class='k'>turn_angle_deg</span><span class='v'>90.9</span></div><div class='kv'><span class='k'>unitcell_pitch_um</span><span class='v'>30.0</span></div><div class='kv'><span class='k'>unitcell_start_s_um</span><span class='v'>6.0</span></div></div>
             </div><div id="panel-overview-side_coupled_meander_chip" class="tab-panel doc md doc-wrap".strip()
                  role="tabpanel" aria-labelledby="tab-overview-side_coupled_meander_chip" hidden>
               <p class='md-p'>Side-coupled meander demo chip with unitcells, pads, and orthogonalized routing.</p>
@@ -3160,6 +3241,9 @@
 </footer>
 
 <script>
+  // -----------------------
+  // Filter + section toggle
+  // -----------------------
   const q = document.getElementById('q');
   const cards = Array.from(document.querySelectorAll('.card'));
   const sections = Array.from(document.querySelectorAll('.section'));
@@ -3187,10 +3271,9 @@
     // 2) show/hide section headers if they have any matching cards at all
     for (const sec of sections) {
       const secId = sec.getAttribute('data-section');
-      const anyMatch = cards.some(c => comp.getAttribute('data-section') === secId && isCardMatch(c, s));
+      const anyMatch = cards.some(c => c.getAttribute('data-section') === secId && isCardMatch(c, s));
       sec.style.display = anyMatch ? '' : 'none';
 
-      // keep aria-expanded in sync
       const isCollapsed = collapsed.get(secId) === true;
       sec.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
     }
@@ -3205,7 +3288,9 @@
     });
   }
 
-  // Tabs logic (per card): toggles panels by aria-controls
+  // ------------
+  // Tabs (cards)
+  // ------------
   function setActiveTab(btn) {
     const tabs = btn.closest('.tabs');
     const card = btn.closest('.card');
@@ -3238,7 +3323,6 @@
         setActiveTab(btn);
       });
     }
-    // init: enforce only the active panel visible
     const active = tabs.querySelector('.tab-btn.is-active') || buttons[0];
     if (active) setActiveTab(active);
   }
@@ -3265,85 +3349,115 @@
 
   q.addEventListener('input', applyFilterAndCollapse);
   applyFilterAndCollapse();
-</script>
 
-<script>
-/* =========================
-   Quick Lock Overlay (SHA)
-   ========================= */
-const LOCK_KEY = "pdk_catalog_unlocked_v1";
+  // -----------------------
+  // SHA lock overlay (gate)
+  // -----------------------
+  const LOCK_ENABLED = true;
+  const LOCK_SHA256_HEX = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
+  const LOCK_STORAGE_KEY = "my_pdk_cells_unlock_v1";
 
-/*
-  Replace this with SHA-256(passphrase) in hex
-  Example shown = SHA256("123456")
-*/
-const PASS_HASH_HEX =
-  "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
-
-async function sha256Hex(str) {
-  const enc = new TextEncoder().encode(str);
-  const buf = await crypto.subtle.digest("SHA-256", enc);
-  return Array.from(new Uint8Array(buf))
-    .map(b => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-function showLock(show) {
-  const lock = document.getElementById("lock");
-  if (!lock) return;
-
-  lock.hidden = !show;
-  lock.setAttribute("aria-hidden", show ? "false" : "true");
-  document.documentElement.style.overflow = show ? "hidden" : "";
-  document.body.style.overflow = show ? "hidden" : "";
-}
-
-function initLock() {
-  if (sessionStorage.getItem(LOCK_KEY) === "1") {
-    showLock(false);
-    return;
+  function hexFromBuf(buf) {
+    const bytes = new Uint8Array(buf);
+    let hex = '';
+    for (let i = 0; i < bytes.length; i++) {
+      hex += bytes[i].toString(16).padStart(2, '0');
+    }
+    return hex;
   }
 
-  showLock(true);
+  async function sha256Hex(text) {
+    const enc = new TextEncoder();
+    const data = enc.encode(text);
+    const digest = await crypto.subtle.digest('SHA-256', data);
+    return hexFromBuf(digest);
+  }
 
-  const form = document.getElementById("lockForm");
-  const input = document.getElementById("lockInput");
-  const err = document.getElementById("lockErr");
+  function setLocked(on) {
+    document.body.classList.toggle('locked', !!on);
+    const ov = document.getElementById('lockOverlay');
+    if (ov) ov.setAttribute('aria-hidden', on ? 'false' : 'true');
+  }
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    err.textContent = "";
+  function rememberUnlock(token) {
+    try {
+      localStorage.setItem(LOCK_STORAGE_KEY, token);
+    } catch (e) {}
+  }
 
-    const guess = (input.value || "").trim();
-    if (!guess) {
-      err.textContent = "Enter a passphrase.";
+  function hasUnlockToken() {
+    try {
+      const t = localStorage.getItem(LOCK_STORAGE_KEY) || '';
+      return (t && t === LOCK_SHA256_HEX);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function tryUnlock(pass) {
+    const err = document.getElementById('lockErr');
+    if (err) err.textContent = '';
+
+    if (!pass || pass.trim().length === 0) {
+      if (err) err.textContent = 'Enter a key.';
+      return false;
+    }
+    if (!crypto || !crypto.subtle) {
+      if (err) err.textContent = 'Browser crypto unavailable.';
+      return false;
+    }
+    const h = await sha256Hex(pass.trim());
+    if (h === LOCK_SHA256_HEX) {
+      rememberUnlock(LOCK_SHA256_HEX);
+      setLocked(false);
+      return true;
+    }
+    if (err) err.textContent = 'Incorrect key.';
+    return false;
+  }
+
+  function initLock() {
+    if (!LOCK_ENABLED) {
+      setLocked(false);
       return;
     }
 
-    try {
-      const h = await sha256Hex(guess);
-      if (h === PASS_HASH_HEX) {
-        sessionStorage.setItem(LOCK_KEY, "1");
-        input.value = "";
-        showLock(false);
-      } else {
-        err.textContent = "Wrong passphrase.";
-        input.value = "";
-        input.focus();
-      }
-    } catch (e) {
-      err.textContent = "Crypto API not available.";
-      console.error(e);
+    // If already unlocked on this browser, skip prompt.
+    if (hasUnlockToken()) {
+      setLocked(false);
+      return;
     }
-  });
 
-  setTimeout(() => input.focus(), 0);
-}
+    setLocked(true);
 
-document.addEventListener("DOMContentLoaded", initLock);
+    const input = document.getElementById('lockInput');
+    const btn = document.getElementById('lockBtn');
+
+    async function go() {
+      const pass = input ? input.value : '';
+      await tryUnlock(pass);
+      if (input) input.value = '';
+      if (input) input.focus();
+    }
+
+    if (btn) btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      go();
+    });
+
+    if (input) {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          go();
+        }
+      });
+      input.focus();
+    }
+  }
+
+  initLock();
 </script>
-
-
 
 </body>
 </html>
