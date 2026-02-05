@@ -80,32 +80,16 @@ function initTabsInCard(card) {
         setActiveTab(btn);
       });
     }
-    const active = tabs.querySelector('.tab-btn.is-active') || buttons[0];
+    const active =
+      tabs.querySelector('.tab-btn[aria-controls^="panel-overview-"]') ||
+      tabs.querySelector('.tab-btn.is-active') ||
+      buttons[0];
     if (active) setActiveTab(active);
-  }
-}
-
-function initChipsInCard(card) {
-  const chips = Array.from(card.querySelectorAll('.chip'));
-  for (const chip of chips) {
-    chip.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      const targetTabId = chip.getAttribute('data-target-tab');
-      if (!targetTabId) return;
-      const tab = card.querySelector('#' + CSS.escape(targetTabId));
-      if (tab) {
-        setActiveTab(tab);
-        tab.scrollIntoView({block: 'nearest', inline: 'nearest'});
-      }
-    });
   }
 }
 
 function initCardInteractivity(card) {
   initTabsInCard(card);
-  initChipsInCard(card);
 }
 
 const cardsAll = Array.from(document.querySelectorAll('.card'));
@@ -128,7 +112,8 @@ applyFilterAndCollapse();
     }
   }
 
-  function updateVariant(card, variantId) {
+  function updateVariant(card, variantId, opts) {
+    const focusInfo = !!(opts && opts.focusInfo);
     const variants = parseVariants(card);
     if (!variants.length) return;
 
@@ -141,6 +126,10 @@ applyFilterAndCollapse();
     if (info && v.tabs_html) info.innerHTML = v.tabs_html;
 
     initCardInteractivity(card);
+    if (focusInfo) {
+      const infoTab = card.querySelector('.tab-btn[aria-controls^="panel-info-"]');
+      if (infoTab) setActiveTab(infoTab);
+    }
 
     const gdsBtn = card.querySelector('.variant-gds');
     if (gdsBtn) {
@@ -172,10 +161,10 @@ applyFilterAndCollapse();
     if (!variants.length) continue;
 
     const initialId = select ? select.value : variants[0].id;
-    updateVariant(card, initialId);
+    updateVariant(card, initialId, { focusInfo: false });
 
     if (select) {
-      select.addEventListener('change', () => updateVariant(card, select.value));
+      select.addEventListener('change', () => updateVariant(card, select.value, { focusInfo: true }));
     }
   }
 
