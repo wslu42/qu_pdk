@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Rules</title>
+<link rel="stylesheet" href="assets/app.css">
+<script defer src="assets/app.js"></script>
+</head>
+<body data-lock-enabled="true" data-lock-sha256-hex="8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92" data-lock-storage-key="my_pdk_cells_unlock_v1">
+<div id="lockOverlay" class="lock-overlay" aria-hidden="false">
+  <div class="lock-card" role="dialog" aria-modal="true" aria-label="Protected content">
+    <div class="lock-title">Protected Page</div>
+    <div class="lock-sub">This catalog is restricted. Enter access key.</div>
+
+    <div class="lock-row">
+      <input id="lockInput" class="lock-input" type="password" autocomplete="current-password"
+             placeholder="Access key" aria-label="Access key" />
+      <button id="lockBtn" class="lock-btn" type="button">Unlock</button>
+    </div>
+
+    <div id="lockErr" class="lock-err" role="status" aria-live="polite"></div>
+
+    <div class="lock-foot mono">
+      SHA-256 gate, local-only, remember on this browser
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-row">
+    <div>
+      <h1 class="site-title"><a class="site-title-link" href="index.html">Process Development Kit © 2026 Quintessence Foundry Services <span class="home-hint">· Home</span></a></h1>
+      <p class="sub sub-empty"></p>
+    </div>
+    <div class="header-meta mono">planar</div>
+  </div>
+  <nav class='topnav is-hidden'><a class='nav-link' href='index.html'>Overview</a><a class='nav-link' href='cells.html'>Cells</a><a class='nav-link' href='layer_stack.html'>Layer Stack</a><a class='nav-link is-active' href='design_rules.html'>Design Rules</a></nav>
+</header>
+
+<div class="wrap">
+  <section class="page-panel">
+  <h2>Design Rules</h2>
+  <p class="sub">
+    DRC summary page. Populate from your ruleset export.
+  </p>
+  <div class="panel">
+    <div class="panel-row"><span class="k">Status</span><span class="v">Pending data source</span></div>
+    <div class="panel-row"><span class="k">Recommended</span><span class="v">Wire to DRC JSON/YAML</span></div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div>For evaluation use only.</div>
+  <div>Authorized distribution by Wen-Sen Lu.</div>
+  <div>Generated: 2026-02-05 00:42:35</div>
+</footer>
+
+</body>
+</html>

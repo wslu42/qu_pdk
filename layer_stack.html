@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Layer Stack</title>
+<link rel="stylesheet" href="assets/app.css">
+<script defer src="assets/app.js"></script>
+</head>
+<body data-lock-enabled="true" data-lock-sha256-hex="8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92" data-lock-storage-key="my_pdk_cells_unlock_v1">
+<div id="lockOverlay" class="lock-overlay" aria-hidden="false">
+  <div class="lock-card" role="dialog" aria-modal="true" aria-label="Protected content">
+    <div class="lock-title">Protected Page</div>
+    <div class="lock-sub">This catalog is restricted. Enter access key.</div>
+
+    <div class="lock-row">
+      <input id="lockInput" class="lock-input" type="password" autocomplete="current-password"
+             placeholder="Access key" aria-label="Access key" />
+      <button id="lockBtn" class="lock-btn" type="button">Unlock</button>
+    </div>
+
+    <div id="lockErr" class="lock-err" role="status" aria-live="polite"></div>
+
+    <div class="lock-foot mono">
+      SHA-256 gate, local-only, remember on this browser
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-row">
+    <div>
+      <h1 class="site-title"><a class="site-title-link" href="index.html">Process Development Kit © 2026 Quintessence Foundry Services <span class="home-hint">· Home</span></a></h1>
+      <p class="sub sub-empty"></p>
+    </div>
+    <div class="header-meta mono">planar</div>
+  </div>
+  <nav class='topnav is-hidden'><a class='nav-link' href='index.html'>Overview</a><a class='nav-link' href='cells.html'>Cells</a><a class='nav-link is-active' href='layer_stack.html'>Layer Stack</a><a class='nav-link' href='design_rules.html'>Design Rules</a></nav>
+</header>
+
+<div class="wrap">
+  <section class="page-panel">
+  <div class="layer-top">
+    <div class="page-head">
+      <h2>Layer Stack</h2>
+      <p class="sub">Planar technode layer stack grouped by process role.</p>
+    </div>
+    <div class="panel layer-stats">
+      <div class="panel-row"><span class="k">Total Layers</span><span class="v">13</span></div>
+      <div class="panel-row"><span class="k">Public Layers</span><span class="v">13</span></div>
+      <div class="panel-row"><span class="k">Build</span><span class="v">2026-02-05</span></div>
+    </div>
+  </div>
+  <div class="panel stack-viz">
+    <div class="stack-viz-title">Stack View</div>
+    <div class="stack-viz-layout">
+      <div class="stack-canvas">
+        <div class="stack-canvas-title">Auto Zoom (-12.7 to 12.9 um)</div>
+        <div class="stack-scale-vertical">
+          <span>Top: 12.9 um</span>
+          <span>Bottom: -12.7 um</span>
+        </div>
+        <div class="stack-bars">
+          <div class='stack-bar stack-bar--plane' style='top:0.000%;height:100.000%;background:rgba(175,238,238,0.06)' title='Vacuum'></div><div class='stack-bar stack-bar--plane' style='top:50.391%;height:49.609%;background:rgba(120,120,120,0.78)' title='QSubstrate'></div><div class='stack-bar stack-bar--strip stack-bar--bridge-strip stack-bar--bridge-strip-shell' style='top:37.891%;height:11.719%;color:rgba(170,170,170,1.00)' title='QRT_gnd'><svg class='bridge-dome-svg' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden='true'><path d='M 0 100 A 50.042 66.462 0 1 1 100 100' fill='none' stroke='currentColor' stroke-width='3.750' stroke-linecap='round'></path></svg></div><div class='stack-bar stack-bar--strip stack-bar--strip-a' style='top:49.609%;height:0.781%;background:rgba(255,128,0,1.00)' title='QM1F_cheesing (+4)'></div><div class='stack-bar stack-bar--strip stack-bar--strip-b' style='top:49.609%;height:0.781%;background:rgba(255,128,0,1.00)' title='QM1F_cheesing (+4)'></div><div class='stack-bar stack-bar--island stack-bar--island-a' style='top:49.609%;height:0.781%;background:rgba(255,128,0,1.00)' title='QM1F_cpwsig (+3)'></div><div class='stack-bar stack-bar--island stack-bar--island-b' style='top:49.609%;height:0.781%;background:rgba(255,128,0,1.00)' title='QM1F_cpwsig (+3)'></div>
+        </div>
+      </div>
+      <div class="stack-canvas">
+        <div class="stack-canvas-title">Full Z (-577.5 to 577.7 um)</div>
+        <div class="stack-scale-vertical">
+          <span>Top: 577.7 um</span>
+          <span>Bottom: -577.5 um</span>
+        </div>
+        <div class="stack-bars">
+          <div class='stack-bar stack-bar--plane' style='top:4.545%;height:90.909%;background:rgba(175,238,238,0.06)' title='Vacuum'></div><div class='stack-bar stack-bar--plane' style='top:50.009%;height:45.446%;background:rgba(120,120,120,0.78)' title='QSubstrate'></div><div class='stack-bar stack-bar--strip stack-bar--bridge-strip stack-bar--bridge-strip-shell' style='top:49.732%;height:0.600%;color:rgba(170,170,170,1.00)' title='QRT_gnd'><svg class='bridge-dome-svg' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden='true'><path d='M 0 100 A 50.042 18.000 0 1 1 100 100' fill='none' stroke='currentColor' stroke-width='0.800' stroke-linecap='round'></path></svg></div><div class='stack-bar stack-bar--strip stack-bar--strip-a' style='top:49.991%;height:0.600%;background:rgba(255,128,0,1.00)' title='QM1F_cheesing (+4)'></div><div class='stack-bar stack-bar--strip stack-bar--strip-b' style='top:49.991%;height:0.600%;background:rgba(255,128,0,1.00)' title='QM1F_cheesing (+4)'></div><div class='stack-bar stack-bar--island stack-bar--island-a' style='top:49.991%;height:0.600%;background:rgba(255,128,0,1.00)' title='QM1F_cpwsig (+3)'></div><div class='stack-bar stack-bar--island stack-bar--island-b' style='top:49.991%;height:0.600%;background:rgba(255,128,0,1.00)' title='QM1F_cpwsig (+3)'></div>
+        </div>
+      </div>
+    </div>
+    <div class="stack-legend">
+      <div class='stack-legend-row'><span class='layer-color' style='background:rgba(120,120,120,0.78)'></span><span class='mono'>QSubstrate</span><span class='mono muted'>z=-525.0, t=525.0</span></div><div class='stack-legend-row'><span class='layer-color' style='background:rgba(175,238,238,0.06)'></span><span class='mono'>Vacuum</span><span class='mono muted'>z=-525.0, t=1050.2</span></div><div class='stack-legend-row'><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span><span class='mono'>QM1F_cheesing</span><span class='mono muted'>z=0.0, t=0.2 (+4)</span></div><div class='stack-legend-row'><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span><span class='mono'>QM1F_cpwsig</span><span class='mono muted'>z=0.0, t=0.2 (+3)</span></div><div class='stack-legend-row'><span class='layer-color' style='background:rgba(170,170,170,0.59)'></span><span class='mono'>QRB_gnd</span><span class='mono muted'>z=0.2, t=3.0</span></div><div class='stack-legend-row'><span class='layer-color' style='background:rgba(170,170,170,1.00)'></span><span class='mono'>QRT_gnd</span><span class='mono muted'>z=3.2, t=0.3</span></div>
+    </div>
+  </div>
+  <details class="layer-group" open>
+  <summary>Environment <span class="muted">(1)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table">
+      <colgroup>
+        <col class="col-ld">
+        <col class="col-purpose">
+        <col class="col-material">
+        <col class="col-color">
+        <col class="col-name">
+        <col class="col-thk">
+        <col class="col-zmin">
+        <col class="col-public">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>L/D</th><th>Purpose</th><th>Material</th><th>Color</th>
+          <th>Name</th><th>thickness (um)</th><th>zmin (um)</th><th>Public</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>2001/0</td><td>vacuum</td><td>Vacuum</td><td><span class='layer-color' style='background:rgba(175,238,238,0.06)'></span></td><td class='mono'>Vacuum</td><td class='mono'>1050.2</td><td class='mono'>-525.0</td><td>Y</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details><details class="layer-group" open>
+  <summary>Substrate <span class="muted">(1)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table">
+      <colgroup>
+        <col class="col-ld">
+        <col class="col-purpose">
+        <col class="col-material">
+        <col class="col-color">
+        <col class="col-name">
+        <col class="col-thk">
+        <col class="col-zmin">
+        <col class="col-public">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>L/D</th><th>Purpose</th><th>Material</th><th>Color</th>
+          <th>Name</th><th>thickness (um)</th><th>zmin (um)</th><th>Public</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>1201/0</td><td>substrate</td><td>Si_cryo</td><td><span class='layer-color' style='background:rgba(120,120,120,0.78)'></span></td><td class='mono'>QSubstrate</td><td class='mono'>525.0</td><td class='mono'>-525.0</td><td>Y</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details><details class="layer-group" open>
+  <summary>Metals <span class="muted">(9)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table">
+      <colgroup>
+        <col class="col-ld">
+        <col class="col-purpose">
+        <col class="col-material">
+        <col class="col-color">
+        <col class="col-name">
+        <col class="col-thk">
+        <col class="col-zmin">
+        <col class="col-public">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>L/D</th><th>Purpose</th><th>Material</th><th>Color</th>
+          <th>Name</th><th>thickness (um)</th><th>zmin (um)</th><th>Public</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>9/0</td><td>metal</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_cheesing</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>2/0</td><td>ground</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_cpwgnd</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>1/0</td><td>signal</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_cpwsig</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>4/0</td><td>ground</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_flxgnd</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>3/0</td><td>signal</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_flxsig</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>8/0</td><td>ground</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_gengnd</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>7/0</td><td>signal</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_gensig</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>6/0</td><td>ground</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_qbtgnd</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr><tr><td class='mono'>5/0</td><td>signal</td><td>Al</td><td><span class='layer-color' style='background:rgba(255,128,0,1.00)'></span></td><td class='mono'>QM1F_qbtsig</td><td class='mono'>0.2</td><td class='mono'>0.0</td><td>Y</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details><details class="layer-group" open>
+  <summary>Bridge <span class="muted">(2)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table">
+      <colgroup>
+        <col class="col-ld">
+        <col class="col-purpose">
+        <col class="col-material">
+        <col class="col-color">
+        <col class="col-name">
+        <col class="col-thk">
+        <col class="col-zmin">
+        <col class="col-public">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>L/D</th><th>Purpose</th><th>Material</th><th>Color</th>
+          <th>Name</th><th>thickness (um)</th><th>zmin (um)</th><th>Public</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>22/0</td><td>bridge</td><td>Al</td><td><span class='layer-color' style='background:rgba(170,170,170,0.59)'></span></td><td class='mono'>QRB_gnd</td><td class='mono'>3.0</td><td class='mono'>0.2</td><td>Y</td></tr><tr><td class='mono'>32/0</td><td>bridge</td><td>Al</td><td><span class='layer-color' style='background:rgba(170,170,170,1.00)'></span></td><td class='mono'>QRT_gnd</td><td class='mono'>0.3</td><td class='mono'>3.2</td><td>Y</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+</section>
+</div>
+
+<footer>
+  <div>For evaluation use only.</div>
+  <div>Authorized distribution by Wen-Sen Lu.</div>
+  <div>Generated: 2026-02-05 00:42:35</div>
+</footer>
+
+</body>
+</html>

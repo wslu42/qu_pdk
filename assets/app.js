@@ -14,6 +14,7 @@ function isCardMatch(card, query) {
 }
 
 function applyFilterAndCollapse() {
+  if (!q) return;
   const s = q.value.toLowerCase().trim();
 
   // 1) show/hide cards based on search + collapsed state
@@ -95,8 +96,10 @@ function initCardInteractivity(card) {
 const cardsAll = Array.from(document.querySelectorAll('.card'));
 for (const card of cardsAll) initCardInteractivity(card);
 
-q.addEventListener('input', applyFilterAndCollapse);
-applyFilterAndCollapse();
+if (q) {
+  q.addEventListener('input', applyFilterAndCollapse);
+  applyFilterAndCollapse();
+}
 
   // -----------------------
   
