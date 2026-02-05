@@ -42,23 +42,141 @@
 <div class="wrap">
   <section class="page-panel">
   <h2>Design Rules</h2>
-  <p class="sub">
-    DRC summary page. Populate from your ruleset export.
-  </p>
-  <div class="panel">
-    <div class="panel-row"><span class="k">Status</span><span class="v">Pending data source</span></div>
-    <div class="panel-row"><span class="k">Recommended</span><span class="v">Wire to DRC JSON/YAML</span></div>
+  <p class="sub">DRC summary and key constraints.</p>
+  <div class="panel rules-summary">
+    <div class="panel-row"><span class="k">Rules</span><span class="v">5</span></div>
+    <div class="panel-row"><span class="k">Errors</span><span class="v">4</span></div>
+    <div class="panel-row"><span class="k">Warnings</span><span class="v">1</span></div>
+    <div class="panel-row"><span class="k">Waivable</span><span class="v">1</span></div>
+    <div class="panel-row"><span class="k">Units</span><span class="v">um</span></div>
+    <div class="panel-row"><span class="k">Engine</span><span class="v">klayout</span></div>
+    <div class="panel-row"><span class="k">Format</span><span class="v">1</span></div>
   </div>
+  <details class="layer-group rules-group" open>
+  <summary>CPW <span class="muted">(2)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table rules-table">
+      <colgroup>
+        <col class="col-rule-id">
+        <col class="col-rule-summary">
+        <col class="col-rule-desc">
+        <col class="col-rule-layers">
+        <col class="col-rule-check">
+        <col class="col-rule-sev">
+        <col class="col-rule-waive">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Summary</th>
+          <th>Description</th>
+          <th>Layers</th>
+          <th>Check</th>
+          <th>Severity</th>
+          <th>Waivable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>CPW_MIN_WIDTH</td><td>Minimum CPW signal width</td><td class='rule-desc'>Ensure signal line width meets process minimum.</td><td class='mono rule-layers'>signal:QM1F_cpwsig</td><td class='mono'>min_width 1.0 um</td><td><span class='pill fail'>ERROR</span></td><td class='mono'>No</td></tr><tr><td class='mono'>CPW_MIN_GAP</td><td>Minimum CPW gap</td><td class='rule-desc'>Ensure gap between signal and ground meets minimum.</td><td class='mono rule-layers'>signal:QM1F_cpwsig<br>ground:QM1F_cpwgnd</td><td class='mono'>min_space 1.0 um</td><td><span class='pill fail'>ERROR</span></td><td class='mono'>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details><details class="layer-group rules-group" open>
+  <summary>JJ <span class="muted">(1)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table rules-table">
+      <colgroup>
+        <col class="col-rule-id">
+        <col class="col-rule-summary">
+        <col class="col-rule-desc">
+        <col class="col-rule-layers">
+        <col class="col-rule-check">
+        <col class="col-rule-sev">
+        <col class="col-rule-waive">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Summary</th>
+          <th>Description</th>
+          <th>Layers</th>
+          <th>Check</th>
+          <th>Severity</th>
+          <th>Waivable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>JJ_MIN_FEATURE</td><td>Minimum JJ feature</td><td class='rule-desc'>Minimum linewidth for JJ patterning layers.</td><td class='mono rule-layers'>jj:QEB_manhattan</td><td class='mono'>min_width 0.2 um</td><td><span class='pill fail'>ERROR</span></td><td class='mono'>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details><details class="layer-group rules-group" open>
+  <summary>PAD <span class="muted">(1)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table rules-table">
+      <colgroup>
+        <col class="col-rule-id">
+        <col class="col-rule-summary">
+        <col class="col-rule-desc">
+        <col class="col-rule-layers">
+        <col class="col-rule-check">
+        <col class="col-rule-sev">
+        <col class="col-rule-waive">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Summary</th>
+          <th>Description</th>
+          <th>Layers</th>
+          <th>Check</th>
+          <th>Severity</th>
+          <th>Waivable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>PAD_MIN_SIZE</td><td>Minimum pad size</td><td class='rule-desc'>Minimum pad dimension for probing and bonding.</td><td class='mono rule-layers'>pad:QM1F_gensig</td><td class='mono'>min_size 30.0 um</td><td><span class='pill warn'>WARNING</span></td><td class='mono'>Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details><details class="layer-group rules-group" open>
+  <summary>GLOBAL <span class="muted">(1)</span></summary>
+  <div class="layer-table-wrap">
+    <table class="layer-table rules-table">
+      <colgroup>
+        <col class="col-rule-id">
+        <col class="col-rule-summary">
+        <col class="col-rule-desc">
+        <col class="col-rule-layers">
+        <col class="col-rule-check">
+        <col class="col-rule-sev">
+        <col class="col-rule-waive">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Summary</th>
+          <th>Description</th>
+          <th>Layers</th>
+          <th>Check</th>
+          <th>Severity</th>
+          <th>Waivable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class='mono'>GLOBAL_NOFILL_KEEP</td><td>Nofill keepout from signal</td><td class='rule-desc'>Keep nofill region separated from signal metal.</td><td class='mono rule-layers'>signal:QM1F_cpwsig<br>nofill:QM1F_nofill</td><td class='mono'>min_space 1.0 um</td><td><span class='pill fail'>ERROR</span></td><td class='mono'>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
 </section>
 </div>
 
 <footer>
   <div>For evaluation use only.</div>
   <div>Authorized distribution by Wen-Sen Lu.</div>
-  <div>Generated: 2026-02-05 00:42:35</div>
+  <div>Generated: 2026-02-05 15:57:27</div>
 </footer>
 
 </body>
 </html>
-
-
