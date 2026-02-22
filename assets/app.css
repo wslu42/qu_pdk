@@ -231,7 +231,7 @@
     overflow: hidden;
   }
   .thumb {
-    width: 100%;
+    width: 50%;
     height: auto;
     display: block;
     border-radius: 8px;
