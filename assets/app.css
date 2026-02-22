@@ -166,6 +166,8 @@
   }
   .pill.ok { color: var(--ok); border-color: rgba(43,213,118,0.35); }
   .pill.fail { color: var(--fail); border-color: rgba(255,92,92,0.35); }
+  .pill.warn { color: #f5c451; border-color: rgba(245,196,81,0.35); }
+  .pill.info { color: #6db1ff; border-color: rgba(109,177,255,0.35); }
   .pill.fab-pill {
     color: #ffd28a;
     border-color: rgba(255,210,138,0.35);
@@ -234,6 +236,7 @@
     width: 50%;
     height: auto;
     display: block;
+    margin: 0 auto;
     border-radius: 8px;
     max-height: 100%;
     object-fit: contain;
@@ -596,6 +599,31 @@
     z-index: 1;
   }
 
+  .overview-demo {
+    margin-top: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px;
+    padding: 12px;
+    background: linear-gradient(180deg, rgba(15,21,32,0.55), rgba(12,16,24,0.78));
+  }
+  .overview-demo-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(233,238,247,0.9);
+    margin-bottom: 10px;
+  }
+  .overview-demo-gif {
+    display: block;
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(8,12,18,0.55);
+  }
+
   .page-panel {
     padding: 16px;
     background: rgba(18,24,35,0.65);
@@ -710,6 +738,18 @@
   .layer-table .col-thk { width: 120px; }
   .layer-table .col-zmin { width: 120px; }
   .layer-table .col-public { width: 80px; }
+
+  .rules-summary { margin-bottom: 14px; }
+  .rules-table td { white-space: normal; }
+  .rules-table .rule-desc { color: rgba(233,238,247,0.82); }
+  .rules-table .rule-layers { white-space: normal; }
+  .rules-table .col-rule-id { width: 140px; }
+  .rules-table .col-rule-summary { width: 190px; }
+  .rules-table .col-rule-desc { width: 320px; }
+  .rules-table .col-rule-layers { width: 220px; }
+  .rules-table .col-rule-check { width: 170px; }
+  .rules-table .col-rule-sev { width: 110px; }
+  .rules-table .col-rule-waive { width: 90px; }
 
   .stack-viz-title {
     font-size: 13px;
